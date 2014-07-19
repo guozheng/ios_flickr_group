@@ -9,6 +9,9 @@
 #import "logInViewController.h"
 
 @interface logInViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *logInButton;
 
 @end
 

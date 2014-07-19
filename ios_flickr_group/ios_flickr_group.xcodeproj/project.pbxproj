@@ -17,6 +17,10 @@
 		159F0D401979EC56007930AF /* groupDetalisViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 159F0D3E1979EC56007930AF /* groupDetalisViewController.xib */; };
 		159F0D441979EC6C007930AF /* topicDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 159F0D421979EC6C007930AF /* topicDetailsViewController.m */; };
 		159F0D451979EC6C007930AF /* topicDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 159F0D431979EC6C007930AF /* topicDetailsViewController.xib */; };
+		159F0D491979F41C007930AF /* myGroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 159F0D471979F41C007930AF /* myGroupTableViewCell.m */; };
+		159F0D4A1979F41C007930AF /* myGroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 159F0D481979F41C007930AF /* myGroupTableViewCell.xib */; };
+		159F0D4E1979F433007930AF /* addGroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 159F0D4C1979F433007930AF /* addGroupTableViewCell.m */; };
+		159F0D4F1979F433007930AF /* addGroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 159F0D4D1979F433007930AF /* addGroupTableViewCell.xib */; };
 		6FE80DDF19787C5900CAB00E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FE80DDE19787C5900CAB00E /* Foundation.framework */; };
 		6FE80DE119787C5900CAB00E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FE80DE019787C5900CAB00E /* CoreGraphics.framework */; };
 		6FE80DE319787C5900CAB00E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FE80DE219787C5900CAB00E /* UIKit.framework */; };
@@ -58,6 +62,12 @@
 		159F0D411979EC6C007930AF /* topicDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = topicDetailsViewController.h; sourceTree = "<group>"; };
 		159F0D421979EC6C007930AF /* topicDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = topicDetailsViewController.m; sourceTree = "<group>"; };
 		159F0D431979EC6C007930AF /* topicDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = topicDetailsViewController.xib; sourceTree = "<group>"; };
+		159F0D461979F41C007930AF /* myGroupTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myGroupTableViewCell.h; sourceTree = "<group>"; };
+		159F0D471979F41C007930AF /* myGroupTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myGroupTableViewCell.m; sourceTree = "<group>"; };
+		159F0D481979F41C007930AF /* myGroupTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = myGroupTableViewCell.xib; sourceTree = "<group>"; };
+		159F0D4B1979F433007930AF /* addGroupTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addGroupTableViewCell.h; sourceTree = "<group>"; };
+		159F0D4C1979F433007930AF /* addGroupTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addGroupTableViewCell.m; sourceTree = "<group>"; };
+		159F0D4D1979F433007930AF /* addGroupTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addGroupTableViewCell.xib; sourceTree = "<group>"; };
 		6AEDD92094C64653849D7E00 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		6FE80DDB19787C5900CAB00E /* ios_flickr_group.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios_flickr_group.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FE80DDE19787C5900CAB00E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -157,6 +167,12 @@
 				159F0D411979EC6C007930AF /* topicDetailsViewController.h */,
 				159F0D421979EC6C007930AF /* topicDetailsViewController.m */,
 				159F0D431979EC6C007930AF /* topicDetailsViewController.xib */,
+				159F0D461979F41C007930AF /* myGroupTableViewCell.h */,
+				159F0D471979F41C007930AF /* myGroupTableViewCell.m */,
+				159F0D481979F41C007930AF /* myGroupTableViewCell.xib */,
+				159F0D4B1979F433007930AF /* addGroupTableViewCell.h */,
+				159F0D4C1979F433007930AF /* addGroupTableViewCell.m */,
+				159F0D4D1979F433007930AF /* addGroupTableViewCell.xib */,
 			);
 			path = ios_flickr_group;
 			sourceTree = "<group>";
@@ -274,6 +290,8 @@
 				159F0D401979EC56007930AF /* groupDetalisViewController.xib in Resources */,
 				6FE80DF119787C5900CAB00E /* Images.xcassets in Resources */,
 				159F0D3B1979EC3B007930AF /* addGroupsViewController.xib in Resources */,
+				159F0D4F1979F433007930AF /* addGroupTableViewCell.xib in Resources */,
+				159F0D4A1979F41C007930AF /* myGroupTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,10 +346,12 @@
 				159F0D3A1979EC3B007930AF /* addGroupsViewController.m in Sources */,
 				159F0D351979EC28007930AF /* myGroupsViewController.m in Sources */,
 				6FE80DEF19787C5900CAB00E /* AppDelegate.m in Sources */,
+				159F0D4E1979F433007930AF /* addGroupTableViewCell.m in Sources */,
 				159F0D301979EC05007930AF /* logInViewController.m in Sources */,
 				6FE80DEB19787C5900CAB00E /* main.m in Sources */,
 				159F0D441979EC6C007930AF /* topicDetailsViewController.m in Sources */,
 				159F0D3F1979EC56007930AF /* groupDetalisViewController.m in Sources */,
+				159F0D491979F41C007930AF /* myGroupTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
