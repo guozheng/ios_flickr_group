@@ -7,11 +7,13 @@
 //
 
 #import "logInViewController.h"
+#import "myGroupsViewController.h"
 
 @interface logInViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *logInButton;
+- (IBAction)OnLoginClick:(id)sender;
 
 @end
 
@@ -38,4 +40,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)OnLoginClick:(id)sender {
+    NSLog(@"Login Button Clicked");
+    
+    myGroupsViewController* mgvc = [[myGroupsViewController alloc] init];
+    
+    [self.navigationController pushViewController:mgvc animated:YES];
+    
+}
 @end
