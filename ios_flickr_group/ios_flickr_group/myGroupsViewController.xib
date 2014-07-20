@@ -6,7 +6,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="myGroupsViewController">
             <connections>
+                <outlet property="searchBar" destination="Njf-Jc-jOT" id="tVh-pq-nTf"/>
                 <outlet property="searchDisplayController" destination="OdK-2e-hj0" id="0OK-yX-5ir"/>
+                <outlet property="tableView" destination="3CU-NJ-6Kv" id="xAr-Xw-OSo"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,7 +18,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Njf-Jc-jOT">
-                    <rect key="frame" x="0.0" y="26" width="320" height="44"/>
+                    <rect key="frame" x="0.0" y="65" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
@@ -24,7 +26,7 @@
                     </connections>
                 </searchBar>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3CU-NJ-6Kv">
-                    <rect key="frame" x="0.0" y="70" width="320" height="498"/>
+                    <rect key="frame" x="0.0" y="109" width="320" height="498"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>

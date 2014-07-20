@@ -8,6 +8,10 @@
 
 #import "myGroupTableViewCell.h"
 
+@interface myGroupTableViewCell ()
+
+@end
+
 @implementation myGroupTableViewCell
 
 - (void)awakeFromNib
