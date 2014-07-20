@@ -7,6 +7,7 @@
 //
 
 #import "myGroupsViewController.h"
+#import "addGroupsViewController.h"
 
 @interface myGroupsViewController ()
 
@@ -27,12 +28,24 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.navigationItem.title = @"My Groups";
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStyleBordered target:self action:@selector(joinNewGroup)];
+    
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)joinNewGroup
+{
+    NSLog(@"joinNewGroup Clicked");
+    addGroupsViewController* agvc = [[addGroupsViewController alloc] init];
+    [self.navigationController pushViewController:agvc animated:YES];
 }
 
 @end

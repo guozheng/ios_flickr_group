@@ -50,6 +50,9 @@
                     <state key="normal" title="Log-In">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="OnLoginClick:" destination="-1" eventType="touchUpInside" id="eUe-VQ-6TQ"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
