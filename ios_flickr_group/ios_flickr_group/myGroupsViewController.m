@@ -9,6 +9,7 @@
 #import "myGroupsViewController.h"
 #import "addGroupsViewController.h"
 #import "myGroupTableViewCell.h"
+#import "groupDetalisViewController.h"
 
 @interface myGroupsViewController ()
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -34,7 +35,7 @@
     
     self.navigationItem.title = @"My Groups";
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStyleBordered target:self action:@selector(joinNewGroup)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Join" style:UIBarButtonItemStyleBordered target:self action:@selector(joinNewGroup)];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -64,9 +65,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.tableView registerNib: [UINib nibWithNibName:@"myGroupTableViewCell" bundle:nil] forCellReuseIdentifier:@"myGroupTableViewCell"];
-    myGroupTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"myGroupTableViewCell"];
+    [self.tableView registerNib: [UINib nibWithNibName:@"myGroupTableViewCell" bundle:nil] forCellReuseIdentifier:@"myGroupTableViewCellID"];
+    myGroupTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"myGroupTableViewCellID"];
     
+    if (cell == nil)
+        cell = [[myGroupTableViewCell alloc] init];
+        
     cell.groupNameLabel.text = [NSString stringWithFormat:@"Group #%d", indexPath.row];
     cell.groupDescLabel.text = [NSString stringWithFormat:@"this is description for Group #%d", indexPath.row];
     
@@ -76,6 +80,14 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 85.0f;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    groupDetalisViewController* gdvc = [[groupDetalisViewController alloc] init];
+    [self.navigationController pushViewController:gdvc animated:YES];
 }
 
 @end
