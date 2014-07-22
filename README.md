@@ -1,5 +1,9 @@
 #FlickrGroup: an iOS app that focuses on the Flickr Group and Social features
 
+#Workflow
+
+![GitHub Logo](/ios_flickr_group/ios_flickr_group/record-workflow.gif)
+
 #Overview
 
 The official Flickr! app does not expose all the Flickr! Group features,
