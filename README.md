@@ -1,9 +1,5 @@
 #FlickrGroup: an iOS app that focuses on the Flickr Group and Social features
 
-#Workflow
-
-![GitHub Logo](/ios_flickr_group/record-workflow.gif)
-
 #Overview
 
 The official Flickr! app does not expose all the Flickr! Group features,
@@ -11,6 +7,11 @@ it only shows the photos from groups. This iOS app adds other missing
 features such as group management (search for groups, join and leave a
 group) and group discussion (create new topic, comment on existing
 topic, etc.)
+
+#Workflow
+
+![GitHub Logo](/ios_flickr_group/record-workflow.gif)
+
 
 #Design
 
