@@ -2,7 +2,7 @@
 
 #Workflow
 
-![GitHub Logo](/ios_flickr_group/ios_flickr_group/record-workflow.gif)
+![GitHub Logo](/ios_flickr_group/record-workflow.gif)
 
 #Overview
 
