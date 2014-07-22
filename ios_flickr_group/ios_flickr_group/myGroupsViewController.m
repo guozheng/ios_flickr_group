@@ -35,12 +35,11 @@
     
     self.navigationItem.title = @"My Groups";
     
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStyleBordered target:self action:@selector(userSignOut)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Join" style:UIBarButtonItemStyleBordered target:self action:@selector(joinNewGroup)];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    
-    
     
 }
 
@@ -55,6 +54,13 @@
     NSLog(@"joinNewGroup Clicked");
     addGroupsViewController* agvc = [[addGroupsViewController alloc] init];
     [self.navigationController pushViewController:agvc animated:YES];
+}
+
+- (void) userSignOut
+{
+    NSLog(@"user hit sign out");
+    //TODO: sign out
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
