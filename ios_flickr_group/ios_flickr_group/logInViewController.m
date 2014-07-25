@@ -8,10 +8,10 @@
 
 #import "logInViewController.h"
 #import "myGroupsViewController.h"
+#import "FlickrGroupClient.h"
 
 @interface logInViewController ()
-@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *logInButton;
 - (IBAction)OnLoginClick:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
@@ -35,11 +35,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.userNameTextField.delegate = self;
-    self.passwordTextField.delegate = self;
-    
-    self.passwordTextField.secureTextEntry = YES;
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,30 +43,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-/* hide keyboard when clicking elsewhere on the view */
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    
-    [self.userNameTextField resignFirstResponder];
-    [self.passwordTextField resignFirstResponder];
-}
-
-/* hide keyboard when hit return key or click on return */
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
-    [textField resignFirstResponder];
-    
-    return NO;
-    
-}
-
 - (IBAction)OnLoginClick:(id)sender {
-    NSLog(@"Login Button Clicked");
+    NSLog(@"Login button clicked");
     
-    myGroupsViewController* mgvc = [[myGroupsViewController alloc] init];
-    
-    [self.navigationController pushViewController:mgvc animated:YES];
+    [[FlickrGroupClient instance] login];
     
 }
 - (IBAction)OnRegisterClick:(id)sender {
+    NSLog(@"Register button clicked");
 }
 @end

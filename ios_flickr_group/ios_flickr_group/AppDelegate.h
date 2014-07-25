@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "logInViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) logInViewController *loginVC;
+@property (strong, nonatomic) UINavigationController *myGroupsNVC;
+@property (strong, nonatomic) UIViewController *currentVC;
 
 @end

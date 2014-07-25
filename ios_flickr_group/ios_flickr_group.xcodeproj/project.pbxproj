@@ -21,6 +21,9 @@
 		159F0D4A1979F41C007930AF /* myGroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 159F0D481979F41C007930AF /* myGroupTableViewCell.xib */; };
 		159F0D4E1979F433007930AF /* addGroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 159F0D4C1979F433007930AF /* addGroupTableViewCell.m */; };
 		159F0D4F1979F433007930AF /* addGroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 159F0D4D1979F433007930AF /* addGroupTableViewCell.xib */; };
+		3F0AEDDE197F96EF00863B1E /* FlickrGroupClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F0AEDDD197F96EF00863B1E /* FlickrGroupClient.m */; };
+		3F584F5C198236C0000639F5 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F584F5B198236C0000639F5 /* User.m */; };
+		3F90F2D91980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F90F2D81980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m */; };
 		6F648BBC197C863A0005C27C /* groupDetailsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F648BBA197C863A0005C27C /* groupDetailsTableViewCell.m */; };
 		6F648BBD197C863A0005C27C /* groupDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F648BBB197C863A0005C27C /* groupDetailsTableViewCell.xib */; };
 		6FE80DDF19787C5900CAB00E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FE80DDE19787C5900CAB00E /* Foundation.framework */; };
@@ -70,6 +73,12 @@
 		159F0D4B1979F433007930AF /* addGroupTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addGroupTableViewCell.h; sourceTree = "<group>"; };
 		159F0D4C1979F433007930AF /* addGroupTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addGroupTableViewCell.m; sourceTree = "<group>"; };
 		159F0D4D1979F433007930AF /* addGroupTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addGroupTableViewCell.xib; sourceTree = "<group>"; };
+		3F0AEDDC197F96EF00863B1E /* FlickrGroupClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrGroupClient.h; sourceTree = "<group>"; };
+		3F0AEDDD197F96EF00863B1E /* FlickrGroupClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrGroupClient.m; sourceTree = "<group>"; };
+		3F584F5A198236C0000639F5 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		3F584F5B198236C0000639F5 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		3F90F2D71980EA5200DD48ED /* NSURL+dictionaryFromQueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+dictionaryFromQueryString.h"; sourceTree = "<group>"; };
+		3F90F2D81980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+dictionaryFromQueryString.m"; sourceTree = "<group>"; };
 		6AEDD92094C64653849D7E00 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		6F648BB9197C863A0005C27C /* groupDetailsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = groupDetailsTableViewCell.h; sourceTree = "<group>"; };
 		6F648BBA197C863A0005C27C /* groupDetailsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = groupDetailsTableViewCell.m; sourceTree = "<group>"; };
@@ -118,6 +127,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F0AEDDB197F93F800863B1E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3F0AEDDC197F96EF00863B1E /* FlickrGroupClient.h */,
+				3F0AEDDD197F96EF00863B1E /* FlickrGroupClient.m */,
+				3F90F2D71980EA5200DD48ED /* NSURL+dictionaryFromQueryString.h */,
+				3F90F2D81980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		3F584F5919823578000639F5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3F584F5A198236C0000639F5 /* User.h */,
+				3F584F5B198236C0000639F5 /* User.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		6FE80DD219787C5900CAB00E = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +182,8 @@
 		6FE80DE419787C5900CAB00E /* ios_flickr_group */ = {
 			isa = PBXGroup;
 			children = (
+				3F584F5919823578000639F5 /* Models */,
+				3F0AEDDB197F93F800863B1E /* Utils */,
 				6FE80DED19787C5900CAB00E /* AppDelegate.h */,
 				6FE80DEE19787C5900CAB00E /* AppDelegate.m */,
 				6FE80DF019787C5900CAB00E /* Images.xcassets */,
@@ -352,7 +383,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F584F5C198236C0000639F5 /* User.m in Sources */,
 				159F0D3A1979EC3B007930AF /* addGroupsViewController.m in Sources */,
+				3F0AEDDE197F96EF00863B1E /* FlickrGroupClient.m in Sources */,
 				159F0D351979EC28007930AF /* myGroupsViewController.m in Sources */,
 				6FE80DEF19787C5900CAB00E /* AppDelegate.m in Sources */,
 				159F0D4E1979F433007930AF /* addGroupTableViewCell.m in Sources */,
@@ -361,6 +394,7 @@
 				6FE80DEB19787C5900CAB00E /* main.m in Sources */,
 				159F0D441979EC6C007930AF /* topicDetailsViewController.m in Sources */,
 				159F0D3F1979EC56007930AF /* groupDetalisViewController.m in Sources */,
+				3F90F2D91980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m in Sources */,
 				159F0D491979F41C007930AF /* myGroupTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,0 +1,128 @@
+//
+//  FlickrGroupClient.m
+//  ios_flickr_group
+//
+//  Created by Guozheng Ge on 7/23/14.
+//  Copyright (c) 2014 Yahoo. All rights reserved.
+//
+
+#import "FlickrGroupClient.h"
+#import "User.h"
+
+#define OAUTH_BASE_URL @"https://api.flickr.com/services/"
+//#define OAUTH_BASE_URL @"https://www.flickr.com/services/"
+#define API_BASE_URL @"https://api.flickr.com/services/api/"
+#define KEY @"be0dd823b190c7219088ca71c318f640"
+#define SECRET @"d372f98e6acc9df8"
+
+@implementation FlickrGroupClient
+
+static NSString * const kAccessToken = @"kAccessToken";
+static NSString * const kCurrentUser = @"kCurrentUser";
+
++ (FlickrGroupClient *)instance {
+    static FlickrGroupClient *sharedInstance = nil;
+    static dispatch_once_t pred;
+    
+    if (sharedInstance)
+    {
+        return sharedInstance;
+    }
+    
+    dispatch_once(&pred, ^{
+        sharedInstance = [[FlickrGroupClient alloc] initWithBaseURL:[NSURL URLWithString:OAUTH_BASE_URL] consumerKey:KEY consumerSecret:SECRET];
+    });
+    
+    sharedInstance.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+    
+    return sharedInstance;
+}
+
+- (void)saveAccessToken:(BDBOAuthToken *)accessToken {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:accessToken];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kAccessToken];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)removeAccessToken {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kAccessToken];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BDBOAuthToken *)getAccessToken {
+    BDBOAuthToken *accessToken = nil;
+    NSData *data = [[NSUserDefaults standardUserDefaults] dataForKey:kAccessToken];
+    if (data) {
+        accessToken = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    return accessToken;
+}
+
+- (void)removeUser {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCurrentUser];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)saveUser:(User *)currentUser {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:currentUser];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:data forKey:kCurrentUser];
+    [defaults synchronize];
+}
+
+- (User *)getCurrentUser {
+    User *currentUser = nil;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [defaults dataForKey:kCurrentUser];
+    if (data) {
+        currentUser = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    return currentUser;
+}
+
+- (void)logout {
+    [self deauthorize];
+    [self removeAccessToken];
+}
+
+- (void)login {
+    [self fetchRequestTokenWithPath:@"oauth/request_token"
+                             method:@"POST"
+                        callbackURL:[NSURL URLWithString:@"cpflickr://oauth"]
+                              scope:nil
+                            success:^(BDBOAuthToken *requestToken){
+                                NSLog(@"Got the request token: %@", requestToken.token);
+                                NSString *authURL = [NSString stringWithFormat:@"%@oauth/authorize?oauth_token=%@&perms=write",
+                                                     [NSURL URLWithString:OAUTH_BASE_URL],
+                                                     requestToken.token];
+                                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:authURL]];
+                                NSLog(@"Opened the auth url");
+                                
+                            } failure:^(NSError *error) {
+                                NSLog(@"Failed to get the request token: %@", error);
+                            }];
+}
+
+// get current user after passing auth, response includes user id and username
+- (AFHTTPRequestOperation *)currentUserWithSuccess:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSString *url = @"rest";
+    NSDictionary *params = @{@"method":@"flickr.test.login", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY};
+    NSLog(@"REST call for flickr.test.login");
+    
+    return [self GET:url parameters:params success:success failure:failure];
+}
+
+// get detailed user info
+- (AFHTTPRequestOperation *)getUserInfoWithUserId:(NSString *)userId
+                                          success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSString *url = @"rest";
+    NSDictionary *params = @{@"method":@"flickr.people.getInfo", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"user_id":userId};
+    NSLog(@"REST call for flickr.people.getInfo");
+
+    return [self GET:url parameters:params success:success failure:failure];
+}
+
+@end
