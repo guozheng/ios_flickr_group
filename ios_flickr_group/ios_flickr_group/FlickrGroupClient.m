@@ -7,8 +7,11 @@
 //
 
 #import "FlickrGroupClient.h"
+#import "User.h"
 
-#define BASE_URL [NSURL URLWithString:@"https://api.flickr.com/services/rest/"]
+#define OAUTH_BASE_URL @"https://api.flickr.com/services/"
+//#define OAUTH_BASE_URL @"https://www.flickr.com/services/"
+#define API_BASE_URL @"https://api.flickr.com/services/api/"
 #define KEY @"be0dd823b190c7219088ca71c318f640"
 #define SECRET @"d372f98e6acc9df8"
 
@@ -27,8 +30,10 @@ static NSString * const kCurrentUser = @"kCurrentUser";
     }
     
     dispatch_once(&pred, ^{
-        sharedInstance = [[FlickrGroupClient alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL] consumerKey:KEY consumerSecret:SECRET];
+        sharedInstance = [[FlickrGroupClient alloc] initWithBaseURL:[NSURL URLWithString:OAUTH_BASE_URL] consumerKey:KEY consumerSecret:SECRET];
     });
+    
+    sharedInstance.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
     
     return sharedInstance;
 }
@@ -39,14 +44,12 @@ static NSString * const kCurrentUser = @"kCurrentUser";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void)removeAccessToken
-{
+- (void)removeAccessToken {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kAccessToken];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (BDBOAuthToken *)getAccessToken
-{
+- (BDBOAuthToken *)getAccessToken {
     BDBOAuthToken *accessToken = nil;
     NSData *data = [[NSUserDefaults standardUserDefaults] dataForKey:kAccessToken];
     if (data) {
@@ -55,53 +58,71 @@ static NSString * const kCurrentUser = @"kCurrentUser";
     return accessToken;
 }
 
-- (void)saveUser:(NSDictionary *)currentUser
-{
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:currentUser];
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kCurrentUser];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)removeUser
-{
+- (void)removeUser {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCurrentUser];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (NSDictionary *)getCurrentUser
-{
-    NSDictionary *currentUser = nil;
-    NSData *data = [[NSUserDefaults standardUserDefaults] dataForKey:kCurrentUser];
+- (void)saveUser:(User *)currentUser {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:currentUser];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:data forKey:kCurrentUser];
+    [defaults synchronize];
+}
+
+- (User *)getCurrentUser {
+    User *currentUser = nil;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [defaults dataForKey:kCurrentUser];
     if (data) {
         currentUser = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     }
     return currentUser;
 }
 
-- (void)logout
-{
+- (void)logout {
     [self deauthorize];
     [self removeAccessToken];
 }
 
-- (void)login
-{
+- (void)login {
     [self fetchRequestTokenWithPath:@"oauth/request_token"
                              method:@"POST"
-                        callbackURL:[NSURL URLWithString:@"cptwitter://oauth"]
+                        callbackURL:[NSURL URLWithString:@"cpflickr://oauth"]
                               scope:nil
                             success:^(BDBOAuthToken *requestToken){
-                                NSLog(@"Got the request token");
-                                NSString *authURL = [NSString stringWithFormat:@"%@oauth/authorize?oauth_token=%@",
-                                                     BASE_URL,
+                                NSLog(@"Got the request token: %@", requestToken.token);
+                                NSString *authURL = [NSString stringWithFormat:@"%@oauth/authorize?oauth_token=%@&perms=write",
+                                                     [NSURL URLWithString:OAUTH_BASE_URL],
                                                      requestToken.token];
                                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:authURL]];
                                 NSLog(@"Opened the auth url");
                                 
                             } failure:^(NSError *error) {
-                                NSLog(@"Failed to get the request token");
+                                NSLog(@"Failed to get the request token: %@", error);
                             }];
 }
 
+// get current user after passing auth, response includes user id and username
+- (AFHTTPRequestOperation *)currentUserWithSuccess:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSString *url = @"rest";
+    NSDictionary *params = @{@"method":@"flickr.test.login", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY};
+    NSLog(@"REST call for flickr.test.login");
+    
+    return [self GET:url parameters:params success:success failure:failure];
+}
+
+// get detailed user info
+- (AFHTTPRequestOperation *)getUserInfoWithUserId:(NSString *)userId
+                                          success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSString *url = @"rest";
+    NSDictionary *params = @{@"method":@"flickr.people.getInfo", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"user_id":userId};
+    NSLog(@"REST call for flickr.people.getInfo");
+
+    return [self GET:url parameters:params success:success failure:failure];
+}
 
 @end

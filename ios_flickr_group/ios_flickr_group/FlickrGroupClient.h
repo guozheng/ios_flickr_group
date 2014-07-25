@@ -6,7 +6,9 @@
 //  Copyright (c) 2014 Yahoo. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import "BDBOAuth1RequestOperationManager.h"
+#import "User.h"
 
 @interface FlickrGroupClient : BDBOAuth1RequestOperationManager
 
@@ -18,17 +20,26 @@
 
 - (BDBOAuthToken *)getAccessToken;
 
-- (void)saveUser:(NSDictionary *)currentUser;
+- (void)saveUser:(User *)currentUser;
 
 - (void)removeUser;
 
-- (NSDictionary *)getCurrentUser;
+- (User *)getCurrentUser;
 
 - (void)logout;
 
 - (void)login;
 
-- (AFHTTPRequestOperation *)getGroupsWithUserId:(int)userId
+#pragma mark client methods
+
+- (AFHTTPRequestOperation *)currentUserWithSuccess:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                           failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
+
+- (AFHTTPRequestOperation *)getUserInfoWithUserId:(NSString *)userId
+                                          success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
+
+- (AFHTTPRequestOperation *)getGroupsWithUserId:(NSString *)userId
                                           success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
 
