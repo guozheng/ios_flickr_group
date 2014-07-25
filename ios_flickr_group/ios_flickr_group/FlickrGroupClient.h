@@ -43,4 +43,16 @@
                                           success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
 
+- (AFHTTPRequestOperation *)searchGroupsWithKeyword:(NSString *)keyword
+                                            success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
+
+- (AFHTTPRequestOperation *)joinGroupWithGroupId:(NSString *)groupId
+                                            success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
+
+- (AFHTTPRequestOperation *)getGroupDetailWithGroupId:(NSString *)groupId
+                                        success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                              failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
+
 @end
