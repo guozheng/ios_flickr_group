@@ -30,6 +30,8 @@
 
 - (void)login;
 
+- (NSString *)getBuddyIconUrlWithFarm:(NSString *)farm server:(NSString *)server id:(NSString *)id;
+
 #pragma mark client methods
 
 - (AFHTTPRequestOperation *)currentUserWithSuccess:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
