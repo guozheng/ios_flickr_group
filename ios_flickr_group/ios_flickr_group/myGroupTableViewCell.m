@@ -10,6 +10,7 @@
 
 @interface myGroupTableViewCell ()
 
+
 @end
 
 @implementation myGroupTableViewCell

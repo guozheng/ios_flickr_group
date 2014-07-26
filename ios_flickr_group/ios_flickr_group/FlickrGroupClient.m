@@ -103,6 +103,30 @@ static NSString * const kCurrentUser = @"kCurrentUser";
                             }];
 }
 
+/*
+ * Use icon farm, icon server and id to construct buddy icon url. When both farm
+ * and server are 0, no icon was uploaded for the user or group yet, use a default
+ * buddy icon instead. We found there are 11 default buddy icons, randomly pick one
+ * the format is: https://s.yimg.com/pw/images/buddyiconXY.png, XY is 01 to 11.
+ */
+- (NSString *)getBuddyIconUrlWithFarm:(NSString *)farm server:(NSString *)server id:(NSString *)id {
+    NSLog(@"constructing buddy icon url, farm=%@, server=%@", farm, server);
+    NSString *url = nil;
+    if (farm.intValue == 0 && server.intValue == 0) {
+        // use a default buddy icon
+        NSUInteger r = arc4random_uniform(11) + 1; // random int between 1 to 11
+        if (r < 10) {
+            url = [NSString stringWithFormat:@"https://s.yimg.com/pw/images/buddyicon0%d.png", r];
+        } else {
+            url = [NSString stringWithFormat:@"https://s.yimg.com/pw/images/buddyicon%d.png", r];
+        }
+    } else {
+        // construct a buddy icon
+        url = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/buddyicons/%@.jpg", farm, server, id];
+    }
+    return url;
+}
+
 // get current user after passing auth, response includes user id and username
 - (AFHTTPRequestOperation *)currentUserWithSuccess:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
     
@@ -122,6 +146,17 @@ static NSString * const kCurrentUser = @"kCurrentUser";
     NSDictionary *params = @{@"method":@"flickr.people.getInfo", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"user_id":userId};
     NSLog(@"REST call for flickr.people.getInfo");
 
+    return [self GET:url parameters:params success:success failure:failure];
+}
+
+// get groups given a user id
+- (AFHTTPRequestOperation *)getGroupsWithUserId:(NSString *)userId
+                                        success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                        failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSString *url = @"rest";
+    NSDictionary *params = @{@"method":@"flickr.people.getGroups", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"user_id":userId};
+    NSLog(@"REST call for flickr.people.getGroups");
+    
     return [self GET:url parameters:params success:success failure:failure];
 }
 

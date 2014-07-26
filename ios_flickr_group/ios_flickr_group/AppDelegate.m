@@ -99,7 +99,8 @@
                             currentUser.id = userId;
                             currentUser.username = person[@"username"][@"_content"];
                             currentUser.realname = person[@"realname"][@"_content"];
-                            currentUser.buddyIconUrl = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/buddyicons/%@.jpg", person[@"iconfarm"], person[@"iconserver"], userId];
+                            
+                            currentUser.buddyIconUrl = [client getBuddyIconUrlWithFarm:person[@"iconfarm"] server:person[@"iconserver"] id:userId];
                             
                             NSLog(@"created current user object: %@", currentUser);
                             
