@@ -10,7 +10,11 @@
 
 @interface myGroupTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *groupNameLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *groupProfileImageView;
-@property (weak, nonatomic) IBOutlet UILabel *groupDescLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *groupBuddyIcon;
+@property (weak, nonatomic) IBOutlet UILabel *groupName;
+@property (weak, nonatomic) IBOutlet UILabel *groupMemberCount;
+@property (weak, nonatomic) IBOutlet UILabel *groupPhotoCount;
+@property (weak, nonatomic) IBOutlet UIImageView *is18plus;
+@property (weak, nonatomic) IBOutlet UIImageView *isInvitationOnly;
+
 @end

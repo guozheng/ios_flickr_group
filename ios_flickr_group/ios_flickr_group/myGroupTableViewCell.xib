@@ -6,21 +6,28 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" restorationIdentifier="myGroupTableViewCellID" selectionStyle="default" indentationWidth="10" reuseIdentifier="myGroupTableViewCellID" rowHeight="85" id="KGk-i7-Jjw" customClass="myGroupTableViewCell">
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="myGroupTableViewCellID" selectionStyle="default" indentationWidth="10" reuseIdentifier="myGroupTableViewCell" rowHeight="85" id="KGk-i7-Jjw" customClass="myGroupTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="84"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Group #1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sRS-n5-qUE">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Group Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sRS-n5-qUE">
                         <rect key="frame" x="101" y="9" width="212" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Group #1 description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHi-QD-xpu">
-                        <rect key="frame" x="101" y="43" width="212" height="21"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="N members" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHi-QD-xpu">
+                        <rect key="frame" x="101" y="38" width="109" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="N photos" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lLA-l0-jlD">
+                        <rect key="frame" x="101" y="58" width="109" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="highlightedColor"/>
@@ -28,15 +35,29 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FKb-7Z-mi4">
                         <rect key="frame" x="12" y="9" width="70" height="70"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="18plus" translatesAutoresizingMaskIntoConstraints="NO" id="J0u-dc-jx7">
+                        <rect key="frame" x="253" y="53" width="22" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="invitationOnly" translatesAutoresizingMaskIntoConstraints="NO" id="z2i-y5-nLX">
+                        <rect key="frame" x="278" y="53" width="22" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
-                <outlet property="groupDescLabel" destination="eHi-QD-xpu" id="UNy-MZ-Z4i"/>
-                <outlet property="groupNameLabel" destination="sRS-n5-qUE" id="F0k-eU-t8A"/>
-                <outlet property="groupProfileImageView" destination="FKb-7Z-mi4" id="NOA-Mb-1gO"/>
+                <outlet property="groupBuddyIcon" destination="FKb-7Z-mi4" id="ARJ-gj-lgX"/>
+                <outlet property="groupMemberCount" destination="eHi-QD-xpu" id="Rdb-lb-noK"/>
+                <outlet property="groupName" destination="sRS-n5-qUE" id="unk-NK-al8"/>
+                <outlet property="groupPhotoCount" destination="lLA-l0-jlD" id="nOf-8A-Qvv"/>
+                <outlet property="is18plus" destination="J0u-dc-jx7" id="HmS-ha-jhQ"/>
+                <outlet property="isInvitationOnly" destination="z2i-y5-nLX" id="6UO-Oo-XN4"/>
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="18plus" width="190" height="190"/>
+        <image name="invitationOnly" width="512" height="512"/>
+    </resources>
 </document>

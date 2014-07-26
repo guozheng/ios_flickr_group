@@ -15,6 +15,10 @@
 
 #import "AppDelegate.h"
 #import "FlickrGroupClient.h"
+#import "Group.h"
+
+#import "UIImageView+AFNetworking.h"
+#import "MBProgressHUD.h"
 
 @interface myGroupsViewController ()
 
@@ -22,7 +26,10 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) FlickrGroupClient *client;
+@property (strong, nonatomic) User *user;
 @property (strong, nonatomic) NSMutableArray *groups;
+
+@property (strong, nonatomic) UIRefreshControl *refresh;
 
 - (void)reload;
 - (void)userSignOut;
@@ -38,6 +45,7 @@
     if (self) {
         // Custom initialization
         self.client = [FlickrGroupClient instance];
+        self.user = [self.client getCurrentUser];
         [self reload];
     }
     return self;
@@ -53,7 +61,7 @@
     
     // set background color for nav bar
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.18 green:0.07 blue:0.32 alpha:0.6]];
-    [self.navigationController.navigationBar setTranslucent:NO];
+    [self.navigationController.navigationBar setTranslucent:YES];
     
     // set text color for nav bar
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
@@ -75,6 +83,13 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
+    // pull to refresh and load again
+    self.refresh = [[UIRefreshControl alloc] init];
+    self.refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to refresh"];
+    [self.refresh addTarget:self action:@selector(reload) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refresh];
+    [self reload];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -89,8 +104,64 @@
 
 #pragma mark internal methods
 
+// using 3rd party cocoacontrol MBProgressHUD: https://github.com/matej/MBProgressHUD
 - (void)reload {
-    NSLog(@"reloading groups");
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeAnnularDeterminate;
+    hud.labelText = @"Loading...";
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        
+        NSLog(@"reloading groups");
+        [self.client getGroupsWithUserId:self.user.id success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            // hide loading status
+            [hud hide:YES];
+            
+            NSLog(@"successfully got groups for user: %@", self.user);
+            NSLog(@"responseObject: %@", responseObject);
+            NSArray *respGroups = responseObject[@"groups"][@"group"];
+            
+            // clean up existing self.groups
+            self.groups = [[NSMutableArray alloc] initWithCapacity:respGroups.count];
+            
+            for (id respGroup in respGroups) {
+                Group *group = [[Group alloc] init];
+                group.id = respGroup[@"nsid"];
+                group.name = respGroup[@"name"];
+                group.buddyIconUrl = [self.client getBuddyIconUrlWithFarm:respGroup[@"iconfarm"] server:respGroup[@"iconserver"] id:respGroup[@"nsid"]];
+                group.memberCount = [NSString stringWithFormat:@"%@ members", respGroup[@"members"]];
+                group.photoCount = [NSString stringWithFormat:@"%@ photos", respGroup[@"pool_count"]];
+                group.is18plus = [respGroup[@"eighteenplus"] boolValue];
+                group.isInvitationOnly = [respGroup[@"invitation_only"] boolValue];
+                
+                NSLog(@"GROUP: %@", group);
+                
+                // add to groups
+                [self.groups addObject:group];
+            }
+            
+            NSLog(@"self.groups: %@", self.groups);
+            
+            // reload view
+            [self.tableView reloadData];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            // hide loading status
+            [hud hide:YES];
+            
+            NSLog(@"error getting groups for user: %@", self.user);
+            NSLog(@"error details: %@", error);
+        }];
+        
+        if (self.refresh != nil && self.refresh.isRefreshing == YES) {
+            [self.refresh endRefreshing];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        });
+    });
+    
 }
 
 - (void)joinGroup
@@ -119,20 +190,38 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return self.groups.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    myGroupTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"myGroupTableViewCellID"];
+    myGroupTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"myGroupTableViewCell"];
     
     if (!cell) {
         cell = [[myGroupTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"myGroupTableViewCell"];
     }
+    
+    Group *group = self.groups[indexPath.row];
         
-    cell.groupNameLabel.text = [NSString stringWithFormat:@"Group #%d", indexPath.row];
-    cell.groupDescLabel.text = [NSString stringWithFormat:@"this is description for Group #%d", indexPath.row];
+    cell.groupName.text = group.name;
+    cell.groupMemberCount.text = group.memberCount;
+    cell.groupPhotoCount.text = group.photoCount;
+    
+    //group buddy icon
+    NSURL *imageURL = [NSURL URLWithString:group.buddyIconUrl];
+    UIImage *defaultImage = [UIImage imageNamed:@"GroupDefault"];
+    cell.groupBuddyIcon.layer.cornerRadius = 10.0;
+    cell.groupBuddyIcon.layer.borderColor = [[UIColor grayColor] CGColor];
+    cell.groupBuddyIcon.layer.borderWidth = 1.0;
+    cell.groupBuddyIcon.layer.masksToBounds = YES;
+    [cell.groupBuddyIcon setImageWithURL:imageURL placeholderImage:defaultImage];
+    
+    //show or hide 18plus and inviationOnly icons
+    cell.is18plus.hidden = !group.is18plus;
+    cell.isInvitationOnly.hidden = !group.isInvitationOnly;
+    
+    NSLog(@"returning cell #%d", indexPath.row);
     
     return cell;
 }
