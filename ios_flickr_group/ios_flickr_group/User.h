@@ -13,10 +13,6 @@
 @property (strong, nonatomic) NSString *id;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *realname;
-
-// note that buddyIconUrl constructed not necessarily exist,
-// in that case, use the default buddy icons, e.g.
-// https://s.yimg.com/pw/images/buddyicon01.png, from 01 to 11.
 @property (strong, nonatomic) NSString *buddyIconUrl;
 
 @end

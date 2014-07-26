@@ -149,4 +149,15 @@ static NSString * const kCurrentUser = @"kCurrentUser";
     return [self GET:url parameters:params success:success failure:failure];
 }
 
+// get groups given a user id
+- (AFHTTPRequestOperation *)getGroupsWithUserId:(NSString *)userId
+                                        success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                        failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSString *url = @"rest";
+    NSDictionary *params = @{@"method":@"flickr.people.getGroups", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"user_id":userId};
+    NSLog(@"REST call for flickr.people.getGroups");
+    
+    return [self GET:url parameters:params success:success failure:failure];
+}
+
 @end

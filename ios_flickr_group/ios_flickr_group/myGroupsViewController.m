@@ -15,6 +15,9 @@
 
 #import "AppDelegate.h"
 #import "FlickrGroupClient.h"
+#import "Group.h"
+
+#import "UIImageView+AFNetworking.h"
 
 @interface myGroupsViewController ()
 
@@ -22,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) FlickrGroupClient *client;
+@property (strong, nonatomic) User *user;
 @property (strong, nonatomic) NSMutableArray *groups;
 
 - (void)reload;
@@ -38,6 +42,7 @@
     if (self) {
         // Custom initialization
         self.client = [FlickrGroupClient instance];
+        self.user = [self.client getCurrentUser];
         [self reload];
     }
     return self;
@@ -91,6 +96,37 @@
 
 - (void)reload {
     NSLog(@"reloading groups");
+    [self.client getGroupsWithUserId:self.user.id success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"successfully got groups for user: %@", self.user);
+        NSLog(@"responseObject: %@", responseObject);
+        NSArray *respGroups = responseObject[@"groups"][@"group"];
+        
+        // clean up existing self.groups
+        self.groups = [[NSMutableArray alloc] initWithCapacity:respGroups.count];
+        
+        for (id respGroup in respGroups) {
+            Group *group = [[Group alloc] init];
+            group.id = respGroup[@"nsid"];
+            group.name = respGroup[@"name"];
+            group.buddyIconUrl = [self.client getBuddyIconUrlWithFarm:respGroup[@"iconfarm"] server:respGroup[@"iconserver"] id:respGroup[@"nsid"]];
+            group.memberCount = [NSString stringWithFormat:@"%@ members", respGroup[@"members"]];
+            group.photoCount = [NSString stringWithFormat:@"%@ photos", respGroup[@"pool_count"]];
+            
+            NSLog(@"GROUP: %@", group);
+            
+            // add to groups
+            [self.groups addObject:group];
+        }
+        
+        NSLog(@"self.groups: %@", self.groups);
+        
+        // reload view
+        [self.tableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error getting groups for user: %@", self.user);
+        NSLog(@"error details: %@", error);
+    }];
 }
 
 - (void)joinGroup
@@ -119,20 +155,34 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return self.groups.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    myGroupTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"myGroupTableViewCellID"];
+    myGroupTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"myGroupTableViewCell"];
     
     if (!cell) {
         cell = [[myGroupTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"myGroupTableViewCell"];
     }
+    
+    Group *group = self.groups[indexPath.row];
         
-    cell.groupNameLabel.text = [NSString stringWithFormat:@"Group #%d", indexPath.row];
-    cell.groupDescLabel.text = [NSString stringWithFormat:@"this is description for Group #%d", indexPath.row];
+    cell.groupName.text = group.name;
+    cell.groupMemberCount.text = group.memberCount;
+    cell.groupPhotoCount.text = group.photoCount;
+    
+    //group buddy icon
+    NSURL *imageURL = [NSURL URLWithString:group.buddyIconUrl];
+    UIImage *defaultImage = [UIImage imageNamed:@"GroupDefault"];
+    cell.groupBuddyIcon.layer.cornerRadius = 10.0;
+    cell.groupBuddyIcon.layer.borderColor = [[UIColor grayColor] CGColor];
+    cell.groupBuddyIcon.layer.borderWidth = 1.0;
+    cell.groupBuddyIcon.layer.masksToBounds = YES;
+    [cell.groupBuddyIcon setImageWithURL:imageURL placeholderImage:defaultImage];
+    
+    NSLog(@"returning cell #%d", indexPath.row);
     
     return cell;
 }
