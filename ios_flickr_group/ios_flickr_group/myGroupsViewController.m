@@ -58,7 +58,7 @@
     
     // set background color for nav bar
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.18 green:0.07 blue:0.32 alpha:0.6]];
-    [self.navigationController.navigationBar setTranslucent:NO];
+    [self.navigationController.navigationBar setTranslucent:YES];
     
     // set text color for nav bar
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
@@ -111,6 +111,8 @@
             group.buddyIconUrl = [self.client getBuddyIconUrlWithFarm:respGroup[@"iconfarm"] server:respGroup[@"iconserver"] id:respGroup[@"nsid"]];
             group.memberCount = [NSString stringWithFormat:@"%@ members", respGroup[@"members"]];
             group.photoCount = [NSString stringWithFormat:@"%@ photos", respGroup[@"pool_count"]];
+            group.is18plus = [respGroup[@"eighteenplus"] boolValue];
+            group.isInvitationOnly = [respGroup[@"invitation_only"] boolValue];
             
             NSLog(@"GROUP: %@", group);
             
@@ -181,6 +183,10 @@
     cell.groupBuddyIcon.layer.borderWidth = 1.0;
     cell.groupBuddyIcon.layer.masksToBounds = YES;
     [cell.groupBuddyIcon setImageWithURL:imageURL placeholderImage:defaultImage];
+    
+    //show or hide 18plus and inviationOnly icons
+    cell.is18plus.hidden = !group.is18plus;
+    cell.isInvitationOnly.hidden = !group.isInvitationOnly;
     
     NSLog(@"returning cell #%d", indexPath.row);
     

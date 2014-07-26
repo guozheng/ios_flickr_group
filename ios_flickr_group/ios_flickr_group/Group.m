@@ -11,7 +11,7 @@
 @implementation Group
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"id=%@, name=%@, buddyIconUrl=%@", self.id, self.name, self.buddyIconUrl];
+    return [NSString stringWithFormat:@"id=%@, name=%@, buddyIconUrl=%@, is18plus=%d, isInvitationOnly=%d", self.id, self.name, self.buddyIconUrl, self.is18plus, self.isInvitationOnly];
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
@@ -20,6 +20,8 @@
     [encoder encodeObject:self.buddyIconUrl forKey:@"buddyIconUrl"];
     [encoder encodeObject:self.memberCount forKey:@"memberCount"];
     [encoder encodeObject:self.photoCount forKey:@"photoCount"];
+    [encoder encodeBool:self.is18plus forKey:@"is18plus"];
+    [encoder encodeBool:self.isInvitationOnly forKey:@"isInvitationOnly"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
@@ -29,6 +31,8 @@
         self.buddyIconUrl = [decoder decodeObjectForKey:@"buddyIconUrl"];
         self.memberCount = [decoder decodeObjectForKey:@"memberCount"];
         self.photoCount = [decoder decodeObjectForKey:@"photoCount"];
+        self.is18plus = [decoder decodeBoolForKey:@"is18plus"];
+        self.isInvitationOnly = [decoder decodeBoolForKey:@"isInvitationOnly"];
     }
     return self;
 }

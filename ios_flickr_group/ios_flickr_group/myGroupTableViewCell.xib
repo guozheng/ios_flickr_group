@@ -16,7 +16,8 @@
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Group Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sRS-n5-qUE">
                         <rect key="frame" x="101" y="9" width="212" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="N members" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHi-QD-xpu">
@@ -35,6 +36,14 @@
                         <rect key="frame" x="12" y="9" width="70" height="70"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="18plus" translatesAutoresizingMaskIntoConstraints="NO" id="J0u-dc-jx7">
+                        <rect key="frame" x="253" y="53" width="22" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="invitationOnly" translatesAutoresizingMaskIntoConstraints="NO" id="z2i-y5-nLX">
+                        <rect key="frame" x="278" y="53" width="22" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -42,7 +51,13 @@
                 <outlet property="groupMemberCount" destination="eHi-QD-xpu" id="Rdb-lb-noK"/>
                 <outlet property="groupName" destination="sRS-n5-qUE" id="unk-NK-al8"/>
                 <outlet property="groupPhotoCount" destination="lLA-l0-jlD" id="nOf-8A-Qvv"/>
+                <outlet property="is18plus" destination="J0u-dc-jx7" id="HmS-ha-jhQ"/>
+                <outlet property="isInvitationOnly" destination="z2i-y5-nLX" id="6UO-Oo-XN4"/>
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="18plus" width="190" height="190"/>
+        <image name="invitationOnly" width="512" height="512"/>
+    </resources>
 </document>

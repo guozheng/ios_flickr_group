@@ -15,5 +15,7 @@
 @property (strong, nonatomic) NSString *buddyIconUrl;
 @property (strong, nonatomic) NSString *memberCount;
 @property (strong, nonatomic) NSString *photoCount;
+@property BOOL is18plus;
+@property BOOL isInvitationOnly;
 
 @end
