@@ -78,6 +78,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -132,6 +133,8 @@
     [self.navigationController pushViewController:gdvc animated:YES];
 }
 
+#pragma mark - UISearchBarDelegate
+
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
     [searchBar resignFirstResponder];
     [self.view endEditing:YES];
@@ -153,6 +156,14 @@
     
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.searchBar resignFirstResponder];
+    [self.view endEditing:YES];
+}
+
+#pragma mark - internal functions
 // using 3rd party cocoacontrol MBProgressHUD: https://github.com/matej/MBProgressHUD
 - (void)reload {
     

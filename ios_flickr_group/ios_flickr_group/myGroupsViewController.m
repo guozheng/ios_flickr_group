@@ -240,6 +240,8 @@
     [self.navigationController pushViewController:gdvc animated:YES];
 }
 
+#pragma mark - UISearchBarDelegate
+
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
     [searchBar resignFirstResponder];
     [self.view endEditing:YES];
@@ -259,5 +261,10 @@
     
 }
 
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.searchBar resignFirstResponder];
+    [self.view endEditing:YES];
+}
 
 @end
