@@ -18,6 +18,7 @@
 #import "Group.h"
 
 #import "UIImageView+AFNetworking.h"
+#import "MBProgressHUD.h"
 
 @interface myGroupsViewController ()
 
@@ -27,6 +28,8 @@
 @property (strong, nonatomic) FlickrGroupClient *client;
 @property (strong, nonatomic) User *user;
 @property (strong, nonatomic) NSMutableArray *groups;
+
+@property (strong, nonatomic) UIRefreshControl *refresh;
 
 - (void)reload;
 - (void)userSignOut;
@@ -80,6 +83,13 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
+    // pull to refresh and load again
+    self.refresh = [[UIRefreshControl alloc] init];
+    self.refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to refresh"];
+    [self.refresh addTarget:self action:@selector(reload) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refresh];
+    [self reload];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,41 +104,64 @@
 
 #pragma mark internal methods
 
+// using 3rd party cocoacontrol MBProgressHUD: https://github.com/matej/MBProgressHUD
 - (void)reload {
-    NSLog(@"reloading groups");
-    [self.client getGroupsWithUserId:self.user.id success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"successfully got groups for user: %@", self.user);
-        NSLog(@"responseObject: %@", responseObject);
-        NSArray *respGroups = responseObject[@"groups"][@"group"];
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeAnnularDeterminate;
+    hud.labelText = @"Loading...";
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         
-        // clean up existing self.groups
-        self.groups = [[NSMutableArray alloc] initWithCapacity:respGroups.count];
+        NSLog(@"reloading groups");
+        [self.client getGroupsWithUserId:self.user.id success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            // hide loading status
+            [hud hide:YES];
+            
+            NSLog(@"successfully got groups for user: %@", self.user);
+            NSLog(@"responseObject: %@", responseObject);
+            NSArray *respGroups = responseObject[@"groups"][@"group"];
+            
+            // clean up existing self.groups
+            self.groups = [[NSMutableArray alloc] initWithCapacity:respGroups.count];
+            
+            for (id respGroup in respGroups) {
+                Group *group = [[Group alloc] init];
+                group.id = respGroup[@"nsid"];
+                group.name = respGroup[@"name"];
+                group.buddyIconUrl = [self.client getBuddyIconUrlWithFarm:respGroup[@"iconfarm"] server:respGroup[@"iconserver"] id:respGroup[@"nsid"]];
+                group.memberCount = [NSString stringWithFormat:@"%@ members", respGroup[@"members"]];
+                group.photoCount = [NSString stringWithFormat:@"%@ photos", respGroup[@"pool_count"]];
+                group.is18plus = [respGroup[@"eighteenplus"] boolValue];
+                group.isInvitationOnly = [respGroup[@"invitation_only"] boolValue];
+                
+                NSLog(@"GROUP: %@", group);
+                
+                // add to groups
+                [self.groups addObject:group];
+            }
+            
+            NSLog(@"self.groups: %@", self.groups);
+            
+            // reload view
+            [self.tableView reloadData];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            // hide loading status
+            [hud hide:YES];
+            
+            NSLog(@"error getting groups for user: %@", self.user);
+            NSLog(@"error details: %@", error);
+        }];
         
-        for (id respGroup in respGroups) {
-            Group *group = [[Group alloc] init];
-            group.id = respGroup[@"nsid"];
-            group.name = respGroup[@"name"];
-            group.buddyIconUrl = [self.client getBuddyIconUrlWithFarm:respGroup[@"iconfarm"] server:respGroup[@"iconserver"] id:respGroup[@"nsid"]];
-            group.memberCount = [NSString stringWithFormat:@"%@ members", respGroup[@"members"]];
-            group.photoCount = [NSString stringWithFormat:@"%@ photos", respGroup[@"pool_count"]];
-            group.is18plus = [respGroup[@"eighteenplus"] boolValue];
-            group.isInvitationOnly = [respGroup[@"invitation_only"] boolValue];
-            
-            NSLog(@"GROUP: %@", group);
-            
-            // add to groups
-            [self.groups addObject:group];
+        if (self.refresh != nil && self.refresh.isRefreshing == YES) {
+            [self.refresh endRefreshing];
         }
         
-        NSLog(@"self.groups: %@", self.groups);
-        
-        // reload view
-        [self.tableView reloadData];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error getting groups for user: %@", self.user);
-        NSLog(@"error details: %@", error);
-    }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        });
+    });
+    
 }
 
 - (void)joinGroup
