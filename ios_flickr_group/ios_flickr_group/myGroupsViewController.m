@@ -22,7 +22,7 @@
 
 @interface myGroupsViewController ()
 
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) FlickrGroupClient *client;
@@ -67,9 +67,9 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     // search bar
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
-    searchBar.delegate = self;
-    self.navigationItem.titleView = searchBar;
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    self.searchBar.delegate = self;
+    self.navigationItem.titleView = self.searchBar;
     
     // sign out button
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStyleBordered target:self action:@selector(userSignOut)];
@@ -234,9 +234,30 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.searchBar resignFirstResponder];
     
     groupDetalisViewController* gdvc = [[groupDetalisViewController alloc] init];
     [self.navigationController pushViewController:gdvc animated:YES];
 }
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+    [searchBar resignFirstResponder];
+    [self.view endEditing:YES];
+    NSLog(@"did end editing!");
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    
+    NSString* keyword = [searchBar text];
+    [searchBar resignFirstResponder];
+    [self.view endEditing:YES];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
+    [searchBar resignFirstResponder];
+    [self.view endEditing:YES];
+    
+}
+
 
 @end
