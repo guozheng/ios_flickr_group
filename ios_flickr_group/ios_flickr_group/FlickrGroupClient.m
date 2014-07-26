@@ -149,13 +149,47 @@ static NSString * const kCurrentUser = @"kCurrentUser";
     return [self GET:url parameters:params success:success failure:failure];
 }
 
-// get groups given a user id
+// get group with user id
 - (AFHTTPRequestOperation *)getGroupsWithUserId:(NSString *)userId
                                         success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
-                                        failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+                                        failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure{
     NSString *url = @"rest";
     NSDictionary *params = @{@"method":@"flickr.people.getGroups", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"user_id":userId};
-    NSLog(@"REST call for flickr.people.getGroups");
+    NSLog(@"REST call for flickr.people.getGroup");
+    
+    return [self GET:url parameters:params success:success failure:failure];
+}
+
+// search for groups by keywords
+- (AFHTTPRequestOperation *)searchGroupsWithKeyword:(NSString *)keyword
+                                        success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                        failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure{
+    NSString *url = @"rest";
+    NSDictionary *params = @{@"method":@"flickr.groups.search", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"text":keyword};
+    NSLog(@"REST call for flickr.groups.search");
+    
+    return [self GET:url parameters:params success:success failure:failure];
+}
+
+
+// join group
+- (AFHTTPRequestOperation *)joinGroupWithGroupId:(NSString *)groupId
+                                            success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure{
+    NSString *url = @"rest";
+    NSDictionary *params = @{@"method":@"flickr.groups.join", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"group_id":groupId};
+    NSLog(@"REST call for flickr.groups.join");
+    
+    return [self POST:url parameters:params success:success failure:failure];
+}
+
+// get group info
+- (AFHTTPRequestOperation *)getGroupDetailWithGroupId:(NSString *)groupId
+                                            success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure{
+    NSString *url = @"rest";
+    NSDictionary *params = @{@"method":@"flickr.groups.getInfo", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"group_id":groupId};
+    NSLog(@"REST call for flickr.groups.search");
     
     return [self GET:url parameters:params success:success failure:failure];
 }
