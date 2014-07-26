@@ -189,7 +189,18 @@ static NSString * const kCurrentUser = @"kCurrentUser";
                                             failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure{
     NSString *url = @"rest";
     NSDictionary *params = @{@"method":@"flickr.groups.getInfo", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"group_id":groupId};
-    NSLog(@"REST call for flickr.groups.search");
+    NSLog(@"REST call for flickr.groups.getInfo");
+    
+    return [self GET:url parameters:params success:success failure:failure];
+}
+
+// get group topics
+- (AFHTTPRequestOperation *)getGroupTopicsWithGroupId:(NSString *)groupId
+                                              success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                              failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure{
+    NSString *url = @"rest";
+    NSDictionary *params = @{@"method":@"flickr.groups.discuss.topics.getList", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"group_id":groupId};
+    NSLog(@"REST call for flickr.groups.discuss.topics.getList");
     
     return [self GET:url parameters:params success:success failure:failure];
 }
