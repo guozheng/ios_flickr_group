@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface addGroupsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface addGroupsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate,
+                                                    UISearchBarDelegate, UIScrollViewDelegate>
 
 @end
