@@ -24,15 +24,18 @@ PODS:
     - AFNetworking/NSURLConnection (~> 2.3.0)
     - AFNetworking/NSURLSession (~> 2.3.0)
   - MBProgressHUD (0.8)
+  - SWTableViewCell (0.3.0)
 
 DEPENDENCIES:
   - AFNetworking
   - BDBOAuth1Manager
   - MBProgressHUD (~> 0.8)
+  - SWTableViewCell (~> 0.3.0)
 
 SPEC CHECKSUMS:
   AFNetworking: 6d7b76aa5d04c8c37daad3eef4b7e3f2a7620da3
   BDBOAuth1Manager: b877a5d3b94071f8b3a55ff3738d8a73c23d460e
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
+  SWTableViewCell: 1725f7607ce4c154264c18aeb78e4636b11b0b29
 
 COCOAPODS: 0.33.1
