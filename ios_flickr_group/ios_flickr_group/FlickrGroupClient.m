@@ -92,7 +92,7 @@ static NSString * const kCurrentUser = @"kCurrentUser";
                               scope:nil
                             success:^(BDBOAuthToken *requestToken){
                                 NSLog(@"Got the request token: %@", requestToken.token);
-                                NSString *authURL = [NSString stringWithFormat:@"%@oauth/authorize?oauth_token=%@&perms=write",
+                                NSString *authURL = [NSString stringWithFormat:@"%@oauth/authorize?oauth_token=%@&perms=delete",
                                                      [NSURL URLWithString:OAUTH_BASE_URL],
                                                      requestToken.token];
                                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:authURL]];
