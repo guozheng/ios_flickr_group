@@ -10,8 +10,18 @@
 #import "topicDetailsViewController.h"
 #import "groupDetailsTableViewCell.h"
 
+#import "UIImageView+AFNetworking.h"
+#import "MBProgressHUD.h"
+#import "FlickrGroupClient.h"
+#import "Topic.h"
+
 @interface groupDetalisViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (strong, nonatomic) NSString* groupId;
+@property (strong, nonatomic) NSMutableArray* topics;
+@property (strong, nonatomic) FlickrGroupClient* client;
+@property (strong, nonatomic) UIRefreshControl* refresh;
 
 @end
 
@@ -26,6 +36,15 @@
     return self;
 }
 
+-(id)initWithGroupId:(NSString*)groupId
+{
+    self = [super init];
+    if (self){
+        self.groupId = groupId;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -36,6 +55,10 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    
+    self.client = [FlickrGroupClient instance];
+    
+    [self reload];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,7 +74,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return self.topics.count;
 }
 
 
@@ -63,15 +86,19 @@
     if (cell == nil)
         cell = [[groupDetailsTableViewCell alloc] init];
     
-    cell.topicNameLabel.text = [NSString stringWithFormat:@"Topic #%d", indexPath.row];
-    cell.topicDescLabel.text = [NSString stringWithFormat:@"this is description for topic #%d", indexPath.row];
+    Topic* topic = self.topics[indexPath.row];
+    
+    cell.subjectLabel.text = topic.subject;
+    cell.messageLabel.text = topic.message;
+    [cell.topicAuthorProfileImageView setImageWithURL:[NSURL URLWithString:topic.buddyIconUrl]];
+    cell.authorTime.text = [NSString stringWithFormat:@"By %@", topic.authorName];
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 105.0f;
+    return 135.0f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -82,5 +109,64 @@
     [self.navigationController pushViewController:gdvc animated:YES];
 }
 
+
+#pragma mark - internal functions
+// using 3rd party cocoacontrol MBProgressHUD: https://github.com/matej/MBProgressHUD
+- (void)reload {
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeAnnularDeterminate;
+    hud.labelText = @"Loading...";
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        
+        NSLog(@"reloading groups");
+        [self.client getGroupTopicsWithGroupId:self.groupId success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            // hide loading status
+            [hud hide:YES];
+            
+            NSLog(@"successfully searched groups");
+            NSLog(@"responseObject: %@", responseObject);
+            NSArray *respTopics = responseObject[@"topics"][@"topic"];
+            
+            // clean up existing self.groups
+            self.topics = [[NSMutableArray alloc] initWithCapacity:respTopics.count];
+            
+            for (id respTopic in respTopics) {
+                Topic *topic = [[Topic alloc] init];
+                topic.id = respTopic[@"id"];
+                topic.subject = respTopic[@"subject"];
+                topic.message = respTopic[@"message"][@"_content"];
+                topic.authorId = respTopic[@"author"];
+                topic.authorName = respTopic[@"authorname"];
+                topic.buddyIconUrl = [self.client getBuddyIconUrlWithFarm:respTopic[@"iconfarm"] server:respTopic[@"iconserver"] id:topic.authorId];
+                
+                NSLog(@"TOPIC: %@", topic);
+                
+                // add to groups
+                [self.topics addObject:topic];
+            }
+            
+            NSLog(@"self.groups: %@", self.topics);
+            
+            // reload view
+            [self.tableView reloadData];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            // hide loading status
+            [hud hide:YES];
+            
+            NSLog(@"error searching groups");
+            NSLog(@"error details: %@", error);
+        }];
+        
+        if (self.refresh != nil && self.refresh.isRefreshing == YES) {
+            [self.refresh endRefreshing];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        });
+    });
+}
 
 @end
