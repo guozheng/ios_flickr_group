@@ -11,11 +11,11 @@
 @implementation Group
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"id=%@, name=%@, buddyIconUrl=%@, is18plus=%d, isInvitationOnly=%d", self.id, self.name, self.buddyIconUrl, self.is18plus, self.isInvitationOnly];
+    return [NSString stringWithFormat:@"id=%@, name=%@, buddyIconUrl=%@, is18plus=%d, isInvitationOnly=%d", self.groupId, self.name, self.buddyIconUrl, self.is18plus, self.isInvitationOnly];
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
-    [encoder encodeObject:self.id forKey:@"id"];
+    [encoder encodeObject:self.groupId forKey:@"id"];
     [encoder encodeObject:self.name forKey:@"name"];
     [encoder encodeObject:self.buddyIconUrl forKey:@"buddyIconUrl"];
     [encoder encodeObject:self.memberCount forKey:@"memberCount"];
@@ -26,7 +26,7 @@
 
 - (id)initWithCoder:(NSCoder *)decoder {
     if ((self = [super init])) {
-        self.id = [decoder decodeObjectForKey:@"id"];
+        self.groupId = [decoder decodeObjectForKey:@"id"];
         self.name = [decoder decodeObjectForKey:@"name"];
         self.buddyIconUrl = [decoder decodeObjectForKey:@"buddyIconUrl"];
         self.memberCount = [decoder decodeObjectForKey:@"memberCount"];

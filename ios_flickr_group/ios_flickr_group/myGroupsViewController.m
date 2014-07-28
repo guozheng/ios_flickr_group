@@ -126,7 +126,7 @@
             
             for (id respGroup in respGroups) {
                 Group *group = [[Group alloc] init];
-                group.id = respGroup[@"nsid"];
+                group.groupId = respGroup[@"nsid"];
                 group.name = respGroup[@"name"];
                 group.buddyIconUrl = [self.client getBuddyIconUrlWithFarm:respGroup[@"iconfarm"] server:respGroup[@"iconserver"] id:respGroup[@"nsid"]];
                 group.memberCount = [NSString stringWithFormat:@"%@ members", respGroup[@"members"]];
@@ -237,7 +237,7 @@
     [self.searchBar resignFirstResponder];
     
     Group* group = self.groups[indexPath.row];
-    groupDetalisViewController* gdvc = [[groupDetalisViewController alloc] initWithGroupId:group.id];
+    groupDetalisViewController* gdvc = [[groupDetalisViewController alloc] initWithGroupId:group.groupId];
     [self.navigationController pushViewController:gdvc animated:YES];
 }
 
