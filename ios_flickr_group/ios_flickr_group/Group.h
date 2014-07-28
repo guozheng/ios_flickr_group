@@ -10,7 +10,7 @@
 
 @interface Group : NSObject
 
-@property (strong, nonatomic) NSString *id;
+@property (strong, nonatomic) NSString *groupId;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *buddyIconUrl;
 @property (strong, nonatomic) NSString *memberCount;

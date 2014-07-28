@@ -14,6 +14,9 @@
 #import "MBProgressHUD.h"
 #import "FlickrGroupClient.h"
 #import "Group.h"
+#import "SWTableViewCell.h"
+#import "NSMutableArray+SWUtilityButtons.h"
+
 
 
 
@@ -88,10 +91,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     myGroupTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"myGroupTableViewCell"];
+        
+    NSMutableArray *rightUtilityButtons = [[NSMutableArray alloc] init];
+
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:0.07f green:0.75f blue:0.16 alpha:1.0f] title:@"Join"];
     
-    if (!cell) {
-        cell = [[myGroupTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"myGroupTableViewCell"];
-    }
+    cell.rightUtilityButtons = rightUtilityButtons;
+    cell.delegate = self;
+    cell.indexPath = indexPath;
     
     Group *group = self.groups[indexPath.row];
     
@@ -130,7 +137,7 @@
     [self.searchBar resignFirstResponder];
     
     Group* group = self.groups[indexPath.row];
-    groupDetalisViewController* gdvc = [[groupDetalisViewController alloc] initWithGroupId:group.id];
+    groupDetalisViewController* gdvc = [[groupDetalisViewController alloc] initWithGroupId:group.groupId];
     [self.navigationController pushViewController:gdvc animated:YES];
 }
 
@@ -164,6 +171,37 @@
     [self.view endEditing:YES];
 }
 
+#pragma mark - SWTableViewCell
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    switch (index) {
+        case 0:
+        {
+            NSLog(@"Join button was pressed");
+            Group* group = self.groups[((myGroupTableViewCell*)cell).indexPath.row];
+            NSLog(@"%@", group);
+            [self.client joinGroupWithGroupId:group.groupId success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                // hide loading status
+                //[hud hide:YES];
+                
+                NSLog(@"successfully join group!");
+                NSLog(@"responseObject: %@", responseObject);
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                // hide loading status
+                //[hud hide:YES];
+                
+                NSLog(@"error join group");
+                NSLog(@"error details: %@", error);
+            }];
+        }
+            break;
+        case 1:
+            
+            break;
+    }
+}
+
 #pragma mark - internal functions
 // using 3rd party cocoacontrol MBProgressHUD: https://github.com/matej/MBProgressHUD
 - (void)reload {
@@ -187,7 +225,7 @@
             
             for (id respGroup in respGroups) {
                 Group *group = [[Group alloc] init];
-                group.id = respGroup[@"nsid"];
+                group.groupId = respGroup[@"nsid"];
                 group.name = respGroup[@"name"];
                 group.buddyIconUrl = [self.client getBuddyIconUrlWithFarm:respGroup[@"iconfarm"] server:respGroup[@"iconserver"] id:respGroup[@"nsid"]];
                 group.memberCount = [NSString stringWithFormat:@"%@ members", respGroup[@"members"]];
