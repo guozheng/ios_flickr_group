@@ -10,8 +10,8 @@
 
 @interface groupDetailsTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *topicAuthorProfileImageView;
-@property (weak, nonatomic) IBOutlet UILabel *topicNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *topicDescLabel;
-@property (weak, nonatomic) IBOutlet UILabel *topicAuthorLabel;
+@property (weak, nonatomic) IBOutlet UILabel *subjectLabel;
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *authorTime;
 
 @end

@@ -129,7 +129,8 @@
     // if the search bar is active, resign it
     [self.searchBar resignFirstResponder];
     
-    groupDetalisViewController* gdvc = [[groupDetalisViewController alloc] init];
+    Group* group = self.groups[indexPath.row];
+    groupDetalisViewController* gdvc = [[groupDetalisViewController alloc] initWithGroupId:group.id];
     [self.navigationController pushViewController:gdvc animated:YES];
 }
 

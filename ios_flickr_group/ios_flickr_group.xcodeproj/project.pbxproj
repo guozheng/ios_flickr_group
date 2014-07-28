@@ -27,6 +27,7 @@
 		3F90F2D91980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F90F2D81980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m */; };
 		6F648BBC197C863A0005C27C /* groupDetailsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F648BBA197C863A0005C27C /* groupDetailsTableViewCell.m */; };
 		6F648BBD197C863A0005C27C /* groupDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F648BBB197C863A0005C27C /* groupDetailsTableViewCell.xib */; };
+		6FD38ACF19860B5E00B3B3DE /* Topic.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD38ACE19860B5E00B3B3DE /* Topic.m */; };
 		6FE80DDF19787C5900CAB00E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FE80DDE19787C5900CAB00E /* Foundation.framework */; };
 		6FE80DE119787C5900CAB00E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FE80DE019787C5900CAB00E /* CoreGraphics.framework */; };
 		6FE80DE319787C5900CAB00E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FE80DE219787C5900CAB00E /* UIKit.framework */; };
@@ -86,6 +87,8 @@
 		6F648BB9197C863A0005C27C /* groupDetailsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = groupDetailsTableViewCell.h; sourceTree = "<group>"; };
 		6F648BBA197C863A0005C27C /* groupDetailsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = groupDetailsTableViewCell.m; sourceTree = "<group>"; };
 		6F648BBB197C863A0005C27C /* groupDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = groupDetailsTableViewCell.xib; sourceTree = "<group>"; };
+		6FD38ACD19860B5E00B3B3DE /* Topic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Topic.h; sourceTree = "<group>"; };
+		6FD38ACE19860B5E00B3B3DE /* Topic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Topic.m; sourceTree = "<group>"; };
 		6FE80DDB19787C5900CAB00E /* ios_flickr_group.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios_flickr_group.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FE80DDE19787C5900CAB00E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6FE80DE019787C5900CAB00E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -148,6 +151,8 @@
 				3F584F5B198236C0000639F5 /* User.m */,
 				3F584F6019832148000639F5 /* Group.h */,
 				3F584F6119832148000639F5 /* Group.m */,
+				6FD38ACD19860B5E00B3B3DE /* Topic.h */,
+				6FD38ACE19860B5E00B3B3DE /* Topic.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -391,6 +396,7 @@
 				3F584F5C198236C0000639F5 /* User.m in Sources */,
 				159F0D3A1979EC3B007930AF /* addGroupsViewController.m in Sources */,
 				3F0AEDDE197F96EF00863B1E /* FlickrGroupClient.m in Sources */,
+				6FD38ACF19860B5E00B3B3DE /* Topic.m in Sources */,
 				159F0D351979EC28007930AF /* myGroupsViewController.m in Sources */,
 				6FE80DEF19787C5900CAB00E /* AppDelegate.m in Sources */,
 				159F0D4E1979F433007930AF /* addGroupTableViewCell.m in Sources */,

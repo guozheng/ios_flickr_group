@@ -236,7 +236,8 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.searchBar resignFirstResponder];
     
-    groupDetalisViewController* gdvc = [[groupDetalisViewController alloc] init];
+    Group* group = self.groups[indexPath.row];
+    groupDetalisViewController* gdvc = [[groupDetalisViewController alloc] initWithGroupId:group.id];
     [self.navigationController pushViewController:gdvc animated:YES];
 }
 
@@ -250,7 +251,7 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     
-    NSString* keyword = [searchBar text];
+    //NSString* keyword = [searchBar text];
     [searchBar resignFirstResponder];
     [self.view endEditing:YES];
 }

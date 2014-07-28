@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface groupDetalisViewController : UIViewController
+@interface groupDetalisViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+
+-(id)initWithGroupId:(NSString*)groupId;
 
 @end
