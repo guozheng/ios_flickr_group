@@ -91,15 +91,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     myGroupTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"myGroupTableViewCell"];
-        
-    NSMutableArray *rightUtilityButtons = [[NSMutableArray alloc] init];
-
-    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:0.07f green:0.75f blue:0.16 alpha:1.0f] title:@"Join"];
     
+    // For SWTableViewCell
+    NSMutableArray *rightUtilityButtons = [[NSMutableArray alloc] init];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:0.07f green:0.75f blue:0.16 alpha:1.0f] title:@"Join"];
     cell.rightUtilityButtons = rightUtilityButtons;
     cell.delegate = self;
     cell.indexPath = indexPath;
-    
     Group *group = self.groups[indexPath.row];
     
     cell.groupName.text = group.name;

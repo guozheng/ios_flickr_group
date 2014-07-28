@@ -198,12 +198,14 @@
 {
     myGroupTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"myGroupTableViewCell"];
     
-    if (!cell) {
-        cell = [[myGroupTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"myGroupTableViewCell"];
-    }
-    
+    // For SWTableViewCell
+    NSMutableArray *rightUtilityButtons = [[NSMutableArray alloc] init];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:1.0f green:0.23f blue:0.19 alpha:1.0f] title:@"Delete"];
+    cell.rightUtilityButtons = rightUtilityButtons;
+    cell.delegate = self;
+    cell.indexPath = indexPath;
     Group *group = self.groups[indexPath.row];
-        
+
     cell.groupName.text = group.name;
     cell.groupMemberCount.text = group.memberCount;
     cell.groupPhotoCount.text = group.photoCount;
@@ -239,6 +241,44 @@
     Group* group = self.groups[indexPath.row];
     groupDetalisViewController* gdvc = [[groupDetalisViewController alloc] initWithGroupId:group.groupId];
     [self.navigationController pushViewController:gdvc animated:YES];
+}
+
+#pragma mark - SWTableViewCell
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    switch (index) {
+        case 0:
+        {
+            NSLog(@"Delete button was pressed");
+            int rowIndex = ((myGroupTableViewCell*)cell).indexPath.row;
+            Group* group = self.groups[rowIndex];
+            NSLog(@"%@", group);
+            [self.client leaveGroupWithGroupId:group.groupId success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                // hide loading status
+                //[hud hide:YES];
+                
+                NSLog(@"successfully left group!");
+                NSLog(@"responseObject: %@", responseObject);
+                
+                // remove the group from self.groups
+                [self.groups removeObject:group];
+                
+                // reload the tableView
+                [self.tableView reloadData];
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                // hide loading status
+                //[hud hide:YES];
+                
+                NSLog(@"error left group");
+                NSLog(@"error details: %@", error);
+            }];
+        }
+            break;
+        case 1:
+            
+            break;
+    }
 }
 
 #pragma mark - UISearchBarDelegate

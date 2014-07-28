@@ -183,6 +183,18 @@ static NSString * const kCurrentUser = @"kCurrentUser";
     return [self POST:url parameters:params success:success failure:failure];
 }
 
+// leave group
+- (AFHTTPRequestOperation *)leaveGroupWithGroupId:(NSString *)groupId
+                                         success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure{
+    NSString *url = @"rest";
+    NSDictionary *params = @{@"method":@"flickr.groups.leave", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"group_id":groupId};
+    NSLog(@"REST call for flickr.groups.leave");
+    
+    return [self POST:url parameters:params success:success failure:failure];
+}
+
+
 // get group info
 - (AFHTTPRequestOperation *)getGroupDetailWithGroupId:(NSString *)groupId
                                             success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success

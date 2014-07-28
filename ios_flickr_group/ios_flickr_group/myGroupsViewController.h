@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWTableViewCell.h"
 
 @interface myGroupsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,
-                                                    UISearchBarDelegate, UIScrollViewDelegate>
+                                                    UISearchBarDelegate, UIScrollViewDelegate, SWTableViewCellDelegate>
 
 @end
