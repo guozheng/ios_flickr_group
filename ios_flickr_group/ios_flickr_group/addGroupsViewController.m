@@ -169,7 +169,7 @@
     [self.view endEditing:YES];
 }
 
-#pragma mark - SWTableViewCell
+#pragma mark - SWTableViewCellDelegate
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
     switch (index) {
@@ -198,6 +198,12 @@
             
             break;
     }
+}
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state{
+    NSLog(@"did scroll...");
+    
+    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark - internal functions
