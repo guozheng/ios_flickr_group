@@ -22,6 +22,8 @@
 @property (strong, nonatomic) NSMutableArray* topics;
 @property (strong, nonatomic) FlickrGroupClient* client;
 @property (strong, nonatomic) UIRefreshControl* refresh;
+@property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeGestureRecognizer;
+- (IBAction)onSwipe:(id)sender;
 
 @end
 
@@ -57,6 +59,8 @@
     self.tableView.delegate = self;
     
     self.client = [FlickrGroupClient instance];
+    
+    self.swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight | UISwipeGestureRecognizerDirectionLeft;
     
     [self reload];
 }
@@ -169,4 +173,7 @@
     });
 }
 
+- (IBAction)onSwipe:(id)sender {
+    NSLog(@"swipe!");
+}
 @end

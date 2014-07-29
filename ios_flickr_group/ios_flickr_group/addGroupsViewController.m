@@ -201,7 +201,7 @@
 }
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state{
-    NSLog(@"did scroll...");
+    NSLog(@"did scroll... state %d", state);
     
     [self.searchBar resignFirstResponder];
 }
