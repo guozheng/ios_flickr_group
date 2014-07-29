@@ -98,7 +98,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 135.0f;
+    return 110.0f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -146,7 +146,8 @@
                 [self.topics addObject:topic];
             }
             
-            NSLog(@"self.groups: %@", self.topics);
+            NSLog(@"self.topics: %@", self.topics);
+            NSLog(@"self.topic count: %d", self.topics.count);
             
             // reload view
             [self.tableView reloadData];
