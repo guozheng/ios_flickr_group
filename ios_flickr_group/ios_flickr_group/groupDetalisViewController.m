@@ -52,8 +52,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.navigationItem.title = @"Discussions";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStyleBordered target:self action:@selector(createNewDiscussion)];
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 30)];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    label.text= @"Discussion";
+    
+    self.navigationItem.titleView = label;
+    
+//    self.navigationItem.title = @"Discussions";
+    //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStyleBordered target:self action:@selector(createNewDiscussion)];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -109,8 +116,8 @@
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    topicDetailsViewController* gdvc = [[topicDetailsViewController alloc] init];
-    [self.navigationController pushViewController:gdvc animated:YES];
+    //topicDetailsViewController* gdvc = [[topicDetailsViewController alloc] init];
+    //[self.navigationController pushViewController:gdvc animated:YES];
 }
 
 
