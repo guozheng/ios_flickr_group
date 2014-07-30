@@ -52,15 +52,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 30)];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor whiteColor];
-    label.text= @"Discussion";
+    self.navigationItem.title = @"Group Topics";
     
-    self.navigationItem.titleView = label;
+    // set background color for nav bar
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.18 green:0.07 blue:0.32 alpha:0.6]];
+    [self.navigationController.navigationBar setTranslucent:YES];
     
-//    self.navigationItem.title = @"Discussions";
-    //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStyleBordered target:self action:@selector(createNewDiscussion)];
+    // set text color for nav bar
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStyleBordered target:self action:@selector(createNewDiscussion)];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -102,6 +103,10 @@
     cell.subjectLabel.text = topic.subject;
     cell.messageLabel.text = topic.message;
     [cell.topicAuthorProfileImageView setImageWithURL:[NSURL URLWithString:topic.buddyIconUrl]];
+    cell.topicAuthorProfileImageView.layer.cornerRadius = cell.topicAuthorProfileImageView.frame.size.height /2;
+    cell.topicAuthorProfileImageView.layer.masksToBounds = YES;
+    cell.topicAuthorProfileImageView.layer.borderWidth = 0;
+    
     cell.authorTime.text = [NSString stringWithFormat:@"By %@", topic.authorName];
     
     return cell;
