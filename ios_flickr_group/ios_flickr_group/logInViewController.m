@@ -45,11 +45,13 @@
 
 - (IBAction)OnLoginClick:(id)sender {
     NSLog(@"Login button clicked");
-    
     [[FlickrGroupClient instance] login];
     
 }
+
 - (IBAction)OnRegisterClick:(id)sender {
     NSLog(@"Register button clicked");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.flickr.com/signup/"]];
 }
+
 @end
