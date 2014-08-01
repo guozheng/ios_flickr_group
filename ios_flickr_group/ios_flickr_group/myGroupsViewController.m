@@ -213,9 +213,10 @@
     //group buddy icon
     NSURL *imageURL = [NSURL URLWithString:group.buddyIconUrl];
     UIImage *defaultImage = [UIImage imageNamed:@"GroupDefault"];
-    cell.groupBuddyIcon.layer.cornerRadius = 15.0;
-    cell.groupBuddyIcon.layer.borderColor = [[UIColor colorWithRed:0.18 green:0.07 blue:0.32 alpha:1.0] CGColor];
-    cell.groupBuddyIcon.layer.borderWidth = 2.0;
+    cell.groupBuddyIcon.layer.cornerRadius = 20.0;
+//    cell.groupBuddyIcon.layer.borderColor = [[UIColor colorWithRed:0.0 green:0.48 blue:1.00 alpha:1.0] CGColor];
+    cell.groupBuddyIcon.layer.borderColor = [[UIColor darkGrayColor] CGColor];
+    cell.groupBuddyIcon.layer.borderWidth = 4.0;
     cell.groupBuddyIcon.layer.masksToBounds = YES;
     [cell.groupBuddyIcon setImageWithURL:imageURL placeholderImage:defaultImage];
     

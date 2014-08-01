@@ -208,10 +208,12 @@ static NSString * const kCurrentUser = @"kCurrentUser";
 
 // get group topics
 - (AFHTTPRequestOperation *)getGroupTopicsWithGroupId:(NSString *)groupId
+                                         countPerPage:(NSInteger)countPerPage
+                                              pageNum:(NSInteger)pageNum
                                               success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
                                               failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure{
     NSString *url = @"rest";
-    NSDictionary *params = @{@"method":@"flickr.groups.discuss.topics.getList", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"group_id":groupId};
+    NSDictionary *params = @{@"method":@"flickr.groups.discuss.topics.getList", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"group_id":groupId, @"per_page":[NSNumber numberWithInt:countPerPage], @"page":[NSNumber numberWithInt:pageNum]};
     NSLog(@"REST call for flickr.groups.discuss.topics.getList");
     
     return [self GET:url parameters:params success:success failure:failure];

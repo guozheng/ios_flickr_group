@@ -101,7 +101,8 @@
     [cell.topicAuthorProfileImageView setImageWithURL:[NSURL URLWithString:topic.buddyIconUrl]];
     cell.topicAuthorProfileImageView.layer.cornerRadius = cell.topicAuthorProfileImageView.frame.size.height /2;
     cell.topicAuthorProfileImageView.layer.masksToBounds = YES;
-    cell.topicAuthorProfileImageView.layer.borderWidth = 0;
+    cell.topicAuthorProfileImageView.layer.borderWidth = 2.0;
+    cell.topicAuthorProfileImageView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
     
     cell.authorTime.text = [NSString stringWithFormat:@"By %@", topic.authorName];
     
@@ -132,7 +133,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         
         NSLog(@"reloading groups");
-        [self.client getGroupTopicsWithGroupId:self.groupId success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.client getGroupTopicsWithGroupId:self.groupId countPerPage:10 pageNum:1 success:^(AFHTTPRequestOperation *operation, id responseObject) {
             // hide loading status
             [hud hide:YES];
             
