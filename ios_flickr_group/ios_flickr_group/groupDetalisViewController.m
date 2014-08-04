@@ -52,16 +52,34 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.navigationItem.title = @"Group Topics";
+    self.navigationItem.title = @"Discussions";
     
     // set background color for nav bar
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.18 green:0.07 blue:0.32 alpha:0.6]];
-    [self.navigationController.navigationBar setTranslucent:YES];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.18 green:0.07 blue:0.32 alpha:0.6];
+    self.navigationController.navigationBar.translucent = YES; // default is YES
     
-    // set text color for nav bar
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    // set nav bar title text color
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor yellowColor]};
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStyleBordered target:self action:@selector(createNewDiscussion)];
+    // set text color for nav bar button item text
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+    // back bar button
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30.0f, 30.0f)];
+    [backButton setImage:[UIImage imageNamed:@"Back"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(popVc) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+
+    // new topic bar button
+    UIButton *newDiscussionButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30.0f, 30.0f)];
+    [newDiscussionButton setImage:[UIImage imageNamed:@"NewTopic"] forState:UIControlStateNormal];
+    [newDiscussionButton addTarget:self action:@selector(createNewDiscussion) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newDiscussionButton];
+    
+    // register nib file for group details table view cell
+    [self.tableView registerNib: [UINib nibWithNibName:@"groupDetailsTableViewCell" bundle:nil] forCellReuseIdentifier:@"groupDetailsTableViewCellID"];
+    
+    self.tableView.backgroundColor = [UIColor darkGrayColor];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -84,6 +102,10 @@
     NSLog(@"createNewDiscussion clicked!");
 }
 
+- (void) popVc{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.topics.count;
@@ -92,7 +114,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.tableView registerNib: [UINib nibWithNibName:@"groupDetailsTableViewCell" bundle:nil] forCellReuseIdentifier:@"groupDetailsTableViewCellID"];
     groupDetailsTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"groupDetailsTableViewCellID"];
     
     if (cell == nil)
@@ -105,7 +126,8 @@
     [cell.topicAuthorProfileImageView setImageWithURL:[NSURL URLWithString:topic.buddyIconUrl]];
     cell.topicAuthorProfileImageView.layer.cornerRadius = cell.topicAuthorProfileImageView.frame.size.height /2;
     cell.topicAuthorProfileImageView.layer.masksToBounds = YES;
-    cell.topicAuthorProfileImageView.layer.borderWidth = 0;
+    cell.topicAuthorProfileImageView.layer.borderWidth = 2.0;
+    cell.topicAuthorProfileImageView.layer.borderColor = [[UIColor whiteColor] CGColor];
     
     cell.authorTime.text = [NSString stringWithFormat:@"By %@", topic.authorName];
     
@@ -136,7 +158,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         
         NSLog(@"reloading groups");
-        [self.client getGroupTopicsWithGroupId:self.groupId success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.client getGroupTopicsWithGroupId:self.groupId countPerPage:10 pageNum:1 success:^(AFHTTPRequestOperation *operation, id responseObject) {
             // hide loading status
             [hud hide:YES];
             

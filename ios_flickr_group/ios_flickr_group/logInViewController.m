@@ -35,6 +35,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    // gradient background color
+//    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+//    gradientLayer.frame = self.view.layer.bounds;
+//    gradientLayer.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor],
+//                            (id)[[UIColor colorWithRed:0.12 green:0.68 blue:0.87 alpha:0.2] CGColor],
+//                            nil];
+//    [self.view.layer insertSublayer:gradientLayer atIndex:0];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,11 +53,13 @@
 
 - (IBAction)OnLoginClick:(id)sender {
     NSLog(@"Login button clicked");
-    
     [[FlickrGroupClient instance] login];
     
 }
+
 - (IBAction)OnRegisterClick:(id)sender {
     NSLog(@"Register button clicked");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.flickr.com/signup/"]];
 }
+
 @end

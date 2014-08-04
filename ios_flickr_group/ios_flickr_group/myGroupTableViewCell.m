@@ -18,6 +18,7 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    self.groupName.textColor = [UIColor colorWithRed:0.02f green:0.68f blue:0.85f alpha:1.0f];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
