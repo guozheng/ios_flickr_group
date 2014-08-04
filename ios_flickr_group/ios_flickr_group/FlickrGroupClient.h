@@ -62,6 +62,8 @@
                                               failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
 
 - (AFHTTPRequestOperation *)getGroupTopicsWithGroupId:(NSString *)groupId
+                                         countPerPage:(NSInteger)countPerPage
+                                              pageNum:(NSInteger)pageNum
                                             success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
                                               failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
 

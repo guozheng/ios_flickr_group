@@ -75,10 +75,16 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStyleBordered target:self action:@selector(userSignOut)];
     
     // join group button
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Join" style:UIBarButtonItemStyleBordered target:self action:@selector(joinGroup)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Join" style:UIBarButtonItemStyleBordered target:self action:@selector(joinGroup)];
+    UIButton *joinGroupButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30.0f, 30.0f)];
+    [joinGroupButton setImage:[UIImage imageNamed:@"Add"] forState:UIControlStateNormal];
+    [joinGroupButton addTarget:self action:@selector(joinGroup) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:joinGroupButton];
     
     // register group table cell
     [self.tableView registerNib:[UINib nibWithNibName:@"myGroupTableViewCell" bundle:nil] forCellReuseIdentifier:@"myGroupTableViewCell"];
+    
+    self.tableView.backgroundColor = [UIColor blackColor];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -198,6 +204,10 @@
 {
     myGroupTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"myGroupTableViewCell"];
     
+    if (cell == nil) {
+        cell = [[myGroupTableViewCell alloc] init];
+    }
+    
     // For SWTableViewCell
     NSMutableArray *rightUtilityButtons = [[NSMutableArray alloc] init];
     [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:1.0f green:0.23f blue:0.19 alpha:1.0f] title:@"Delete"];
@@ -214,7 +224,8 @@
     NSURL *imageURL = [NSURL URLWithString:group.buddyIconUrl];
     UIImage *defaultImage = [UIImage imageNamed:@"GroupDefault"];
     cell.groupBuddyIcon.layer.cornerRadius = 15.0;
-    cell.groupBuddyIcon.layer.borderColor = [[UIColor colorWithRed:0.18 green:0.07 blue:0.32 alpha:1.0] CGColor];
+    cell.groupBuddyIcon.layer.borderColor = [[UIColor colorWithRed:0.02f green:0.68f blue:0.85f alpha:1.0] CGColor];
+//    cell.groupBuddyIcon.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     cell.groupBuddyIcon.layer.borderWidth = 2.0;
     cell.groupBuddyIcon.layer.masksToBounds = YES;
     [cell.groupBuddyIcon setImageWithURL:imageURL placeholderImage:defaultImage];
