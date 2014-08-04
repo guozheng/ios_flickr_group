@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="groupDetalisViewController">
             <connections>
+                <outlet property="swipeGestureRecognizer" destination="4D9-65-6JJ" id="7Ht-XP-ZLA"/>
                 <outlet property="tableView" destination="SWR-JQ-nHz" id="iWk-In-m6k"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -22,8 +23,17 @@
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <gestureRecognizers/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="4D9-65-6JJ" appends="YES" id="svU-fa-Zug"/>
+            </connections>
         </view>
+        <swipeGestureRecognizer direction="right" id="4D9-65-6JJ">
+            <connections>
+                <action selector="onSwipe:" destination="-1" id="16L-gf-7mg"/>
+            </connections>
+        </swipeGestureRecognizer>
     </objects>
 </document>
