@@ -1,6 +1,8 @@
-#FlickrGroup: an iOS app that focuses on the Flickr Group and Social features
+#FlickrGroup
 
 #Overview
+
+This is an iOS app that focuses on the Flickr Group and Social features.
 
 The official Flickr! app does not expose all the Flickr! Group features,
 it only shows the photos from groups. This iOS app adds other missing
