@@ -10,8 +10,6 @@ topic, etc.)
 
 #Workflow
 
-![GitHub Logo](/ios_flickr_group/record-workflow.gif)
-
 
 #Design
 
