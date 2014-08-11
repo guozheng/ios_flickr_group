@@ -73,7 +73,7 @@
     // new topic bar button
     UIButton *newDiscussionButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30.0f, 30.0f)];
     [newDiscussionButton setImage:[UIImage imageNamed:@"NewTopic"] forState:UIControlStateNormal];
-    [newDiscussionButton addTarget:self action:@selector(createNewDiscussion) forControlEvents:UIControlEventTouchUpInside];
+    [newDiscussionButton addTarget:self action:@selector(newDiscussion) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newDiscussionButton];
     
     // register nib file for group details table view cell
@@ -97,9 +97,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) createNewDiscussion
+- (void) newDiscussion
 {
-    NSLog(@"createNewDiscussion clicked!");
+    NSLog(@"newDiscussion button clicked!");
 }
 
 - (void) popVc{
@@ -143,8 +143,8 @@
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    //topicDetailsViewController* gdvc = [[topicDetailsViewController alloc] init];
-    //[self.navigationController pushViewController:gdvc animated:YES];
+    topicDetailsViewController* gdvc = [[topicDetailsViewController alloc] init];
+    [self.navigationController pushViewController:gdvc animated:YES];
 }
 
 

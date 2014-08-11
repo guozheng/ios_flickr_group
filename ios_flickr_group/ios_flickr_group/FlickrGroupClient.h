@@ -62,9 +62,20 @@
                                               failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
 
 - (AFHTTPRequestOperation *)getGroupTopicsWithGroupId:(NSString *)groupId
-                                         countPerPage:(NSInteger)countPerPage
+                                        countPerPage:(NSInteger)countPerPage
                                               pageNum:(NSInteger)pageNum
-                                            success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                              success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
                                               failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
+
+- (AFHTTPRequestOperation *)getTopicDetailsWithTopicId:(NSString *)topicId
+                                               success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                               failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
+
+- (AFHTTPRequestOperation *)getTopicRepliesWithTopicId:(NSString *)topicId
+                                          countPerPage:(NSInteger)countPerPage
+                                               pageNum:(NSInteger)pageNum
+                                               success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                               failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
+
 
 @end
