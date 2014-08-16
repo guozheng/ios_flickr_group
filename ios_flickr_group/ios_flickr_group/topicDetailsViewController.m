@@ -31,6 +31,15 @@
     return self;
 }
 
+- (id)initWithTopicId:(NSString*)topicId
+{
+    self = [super init];
+    if (self) {
+        self.topicId = topicId;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

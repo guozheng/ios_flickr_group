@@ -8,7 +8,7 @@
 
 #import "groupDetalisViewController.h"
 #import "topicDetailsViewController.h"
-#import "groupDetailsTableViewCell.h"
+#import "topicTableViewCell.h"
 
 #import "UIImageView+AFNetworking.h"
 #import "MBProgressHUD.h"
@@ -77,7 +77,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newDiscussionButton];
     
     // register nib file for group details table view cell
-    [self.tableView registerNib: [UINib nibWithNibName:@"groupDetailsTableViewCell" bundle:nil] forCellReuseIdentifier:@"groupDetailsTableViewCellID"];
+    [self.tableView registerNib: [UINib nibWithNibName:@"topicTableViewCell" bundle:nil] forCellReuseIdentifier:@"topicTableViewCellID"];
     
     self.tableView.backgroundColor = [UIColor darkGrayColor];
     
@@ -114,10 +114,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    groupDetailsTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"groupDetailsTableViewCellID"];
+    topicTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"topicTableViewCellID"];
     
     if (cell == nil)
-        cell = [[groupDetailsTableViewCell alloc] init];
+        cell = [[topicTableViewCell alloc] init];
     
     Topic* topic = self.topics[indexPath.row];
     
