@@ -1,14 +1,14 @@
 //
-//  groupDetailsTableViewCell.m
+//  topicTableViewCell.m
 //  ios_flickr_group
 //
-//  Created by Li Li on 7/20/14.
+//  Created by Guozheng Ge on 8/16/14.
 //  Copyright (c) 2014 Yahoo. All rights reserved.
 //
 
-#import "groupDetailsTableViewCell.h"
+#import "replyTableViewCell.h"
 
-@implementation groupDetailsTableViewCell
+@implementation replyTableViewCell
 
 - (void)awakeFromNib
 {

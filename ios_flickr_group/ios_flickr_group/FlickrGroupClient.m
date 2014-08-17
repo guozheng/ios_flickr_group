@@ -219,5 +219,26 @@ static NSString * const kCurrentUser = @"kCurrentUser";
     return [self GET:url parameters:params success:success failure:failure];
 }
 
+// get topic info
+- (AFHTTPRequestOperation *)getTopicDetailsWithTopicId:(NSString *)topicId success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure{
+    NSString *url = @"rest";
+    NSDictionary *params = @{@"method":@"flickr.groups.discuss.topics.getList", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"topic_id":topicId};
+    NSLog(@"REST call for flickr.groups.discuss.topics.getInfo");
+    
+    return [self GET:url parameters:params success:success failure:failure];
+}
+
+// get a list of replies for a topic
+- (AFHTTPRequestOperation *)getTopicRepliesWithTopicId:(NSString *)topicId
+                                          countPerPage:(NSInteger)countPerPage
+                                               pageNum:(NSInteger)pageNum
+                                               success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                               failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSString *url = @"rest";
+    NSDictionary *params = @{@"method":@"flickr.groups.discuss.replies.getList", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"topic_id":topicId, @"per_page":[NSNumber numberWithInt:countPerPage], @"page":[NSNumber numberWithInt:pageNum]};
+    NSLog(@"REST call for flickr.groups.discuss.replies.getList");
+    
+    return [self GET:url parameters:params success:success failure:failure];
+}
 
 @end

@@ -8,7 +8,7 @@
 
 #import "groupDetalisViewController.h"
 #import "topicDetailsViewController.h"
-#import "groupDetailsTableViewCell.h"
+#import "topicTableViewCell.h"
 
 #import "UIImageView+AFNetworking.h"
 #import "MBProgressHUD.h"
@@ -73,11 +73,11 @@
     // new topic bar button
     UIButton *newDiscussionButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30.0f, 30.0f)];
     [newDiscussionButton setImage:[UIImage imageNamed:@"NewTopic"] forState:UIControlStateNormal];
-    [newDiscussionButton addTarget:self action:@selector(createNewDiscussion) forControlEvents:UIControlEventTouchUpInside];
+    [newDiscussionButton addTarget:self action:@selector(newDiscussion) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newDiscussionButton];
     
     // register nib file for group details table view cell
-    [self.tableView registerNib: [UINib nibWithNibName:@"groupDetailsTableViewCell" bundle:nil] forCellReuseIdentifier:@"groupDetailsTableViewCellID"];
+    [self.tableView registerNib: [UINib nibWithNibName:@"topicTableViewCell" bundle:nil] forCellReuseIdentifier:@"topicTableViewCellID"];
     
     self.tableView.backgroundColor = [UIColor darkGrayColor];
     
@@ -97,9 +97,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) createNewDiscussion
+- (void) newDiscussion
 {
-    NSLog(@"createNewDiscussion clicked!");
+    NSLog(@"newDiscussion button clicked!");
 }
 
 - (void) popVc{
@@ -114,10 +114,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    groupDetailsTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"groupDetailsTableViewCellID"];
+    topicTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"topicTableViewCellID"];
     
     if (cell == nil)
-        cell = [[groupDetailsTableViewCell alloc] init];
+        cell = [[topicTableViewCell alloc] init];
     
     Topic* topic = self.topics[indexPath.row];
     
@@ -143,8 +143,10 @@
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    //topicDetailsViewController* gdvc = [[topicDetailsViewController alloc] init];
-    //[self.navigationController pushViewController:gdvc animated:YES];
+    Topic* topic = self.topics[indexPath.row];
+    
+    topicDetailsViewController* gdvc = [[topicDetailsViewController alloc] initWithTopic:topic];
+    [self.navigationController pushViewController:gdvc animated:YES];
 }
 
 
