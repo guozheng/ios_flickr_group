@@ -143,7 +143,9 @@
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    topicDetailsViewController* gdvc = [[topicDetailsViewController alloc] init];
+    Topic* topic = self.topics[indexPath.row];
+    
+    topicDetailsViewController* gdvc = [[topicDetailsViewController alloc] initWithTopic:topic];
     [self.navigationController pushViewController:gdvc animated:YES];
 }
 

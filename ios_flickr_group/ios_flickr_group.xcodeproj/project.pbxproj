@@ -24,6 +24,7 @@
 		3F0AEDDE197F96EF00863B1E /* FlickrGroupClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F0AEDDD197F96EF00863B1E /* FlickrGroupClient.m */; };
 		3F584F5C198236C0000639F5 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F584F5B198236C0000639F5 /* User.m */; };
 		3F584F6219832148000639F5 /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F584F6119832148000639F5 /* Group.m */; };
+		3F59EFF219A1284A002B5712 /* DateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F59EFF119A1284A002B5712 /* DateUtil.m */; };
 		3F90F2D91980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F90F2D81980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m */; };
 		3FD763EC199F3EF600D00808 /* replyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD763EA199F3EF600D00808 /* replyTableViewCell.m */; };
 		3FD763ED199F3EF600D00808 /* replyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FD763EB199F3EF600D00808 /* replyTableViewCell.xib */; };
@@ -84,6 +85,8 @@
 		3F584F5B198236C0000639F5 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		3F584F6019832148000639F5 /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Group.h; sourceTree = "<group>"; };
 		3F584F6119832148000639F5 /* Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Group.m; sourceTree = "<group>"; };
+		3F59EFF019A1284A002B5712 /* DateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateUtil.h; sourceTree = "<group>"; };
+		3F59EFF119A1284A002B5712 /* DateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateUtil.m; sourceTree = "<group>"; };
 		3F90F2D71980EA5200DD48ED /* NSURL+dictionaryFromQueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+dictionaryFromQueryString.h"; sourceTree = "<group>"; };
 		3F90F2D81980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+dictionaryFromQueryString.m"; sourceTree = "<group>"; };
 		3FD763E9199F3EF600D00808 /* replyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = replyTableViewCell.h; sourceTree = "<group>"; };
@@ -148,6 +151,8 @@
 				3F0AEDDD197F96EF00863B1E /* FlickrGroupClient.m */,
 				3F90F2D71980EA5200DD48ED /* NSURL+dictionaryFromQueryString.h */,
 				3F90F2D81980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m */,
+				3F59EFF019A1284A002B5712 /* DateUtil.h */,
+				3F59EFF119A1284A002B5712 /* DateUtil.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -422,6 +427,7 @@
 				3F584F6219832148000639F5 /* Group.m in Sources */,
 				159F0D441979EC6C007930AF /* topicDetailsViewController.m in Sources */,
 				159F0D3F1979EC56007930AF /* groupDetalisViewController.m in Sources */,
+				3F59EFF219A1284A002B5712 /* DateUtil.m in Sources */,
 				3F90F2D91980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m in Sources */,
 				159F0D491979F41C007930AF /* myGroupTableViewCell.m in Sources */,
 			);

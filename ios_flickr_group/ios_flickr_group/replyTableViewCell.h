@@ -10,5 +10,9 @@
 
 @interface replyTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *buddyIcon;
+@property (weak, nonatomic) IBOutlet UILabel *authorNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateCreateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 
 @end

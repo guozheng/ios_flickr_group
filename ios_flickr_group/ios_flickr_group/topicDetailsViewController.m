@@ -8,12 +8,21 @@
 
 #import "topicDetailsViewController.h"
 #import "FlickrGroupClient.h"
+#import "topicTableViewCell.h"
+#import "replyTableViewCell.h"
+#import "Topic.h"
+#import "Reply.h"
+#import "UIImageView+AFNetworking.h"
+#import "MBProgressHUD.h"
+#import "FlickrGroupClient.h"
+#import "DateUtil.h"
 
 @interface topicDetailsViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSString *topicId;
+@property (strong, nonatomic) Topic *topic;
 @property (strong, nonatomic) NSMutableArray *replies;
 @property (strong, nonatomic) FlickrGroupClient *client;
 @property (strong, nonatomic) UIRefreshControl* refresh;
@@ -31,11 +40,12 @@
     return self;
 }
 
-- (id)initWithTopicId:(NSString*)topicId
+- (id)initWithTopic:(Topic*)topic
 {
     self = [super init];
     if (self) {
-        self.topicId = topicId;
+        self.topic = topic;
+        self.topicId = topic.id;
     }
     return self;
 }
@@ -70,7 +80,8 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newDiscussionButton];
     
     // register nib file for group details table view cell
-//    [self.tableView registerNib: [UINib nibWithNibName:@"groupDetailsTableViewCell" bundle:nil] forCellReuseIdentifier:@"groupDetailsTableViewCellID"];
+    [self.tableView registerNib: [UINib nibWithNibName:@"topicTableViewCell" bundle:nil] forCellReuseIdentifier:@"topicTableViewCellID"];
+    [self.tableView registerNib: [UINib nibWithNibName:@"replyTableViewCell" bundle:nil] forCellReuseIdentifier:@"replyTableViewCellID"];
     
     self.tableView.backgroundColor = [UIColor darkGrayColor];
     
@@ -79,7 +90,7 @@
     
     self.client = [FlickrGroupClient instance];
     
-//    [self reload];
+    [self reload];
 }
 
 - (void)didReceiveMemoryWarning
@@ -97,13 +108,70 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    return self.replies.count;
-    return 1;
+    if (section == 0) {
+        return 1;
+    } else {
+        return self.replies.count;
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return @"Topic";
+    } else {
+        return @"Replies";
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        return 110.0f;
+    } else {
+        return 200.0f;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"selected section=%d, row=%d", indexPath.section, indexPath.row);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
-    return cell;
+    
+    if (indexPath.section == 0) {
+        topicTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"topicTableViewCellID"];
+        if (cell == nil) {
+            cell = [[topicTableViewCell alloc] init];
+        }
+        cell.subjectLabel.text = self.topic.subject;
+        cell.messageLabel.text = self.topic.message;
+        [cell.topicAuthorProfileImageView setImageWithURL:[NSURL URLWithString:self.topic.buddyIconUrl]];
+        cell.topicAuthorProfileImageView.layer.cornerRadius = cell.topicAuthorProfileImageView.frame.size.height /2;
+        cell.topicAuthorProfileImageView.layer.masksToBounds = YES;
+        cell.topicAuthorProfileImageView.layer.borderWidth = 2.0;
+        cell.topicAuthorProfileImageView.layer.borderColor = [[UIColor whiteColor] CGColor];
+        cell.authorTime.text = [NSString stringWithFormat:@"By %@", self.topic.authorName];
+        
+        return cell;
+    
+    } else {
+        replyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"replyTableViewCellID"];
+        if (cell == nil) {
+            cell = [[replyTableViewCell alloc] init];
+        }
+        Reply* reply = self.replies[indexPath.row];
+        cell.authorNameLabel.text = reply.authorName;
+        cell.dateCreateLabel.text = [DateUtil getAgeFromDateCreate:reply.dateCreate];
+        cell.messageLabel.text = reply.message;
+        [cell.buddyIcon setImageWithURL:[NSURL URLWithString:reply.buddyIconUrl]];
+        cell.buddyIcon.layer.cornerRadius = cell.buddyIcon.frame.size.height /2;
+        cell.buddyIcon.layer.masksToBounds = YES;
+        cell.buddyIcon.layer.borderWidth = 2.0;
+        cell.buddyIcon.layer.borderColor = [[UIColor whiteColor] CGColor];
+        return cell;
+    }
 }
 
 #pragma mark internal methods
@@ -115,6 +183,63 @@
     NSLog(@"newReply button clicked");
 }
 
-
+// using 3rd party cocoacontrol MBProgressHUD: https://github.com/matej/MBProgressHUD
+- (void)reload {
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeAnnularDeterminate;
+    hud.labelText = @"Loading...";
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        
+        NSLog(@"reloading replies");
+        [self.client getTopicRepliesWithTopicId:self.topicId countPerPage:10 pageNum:1 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            // hide loading status
+            [hud hide:YES];
+            
+            NSLog(@"successfully got replies");
+            NSLog(@"responseObject: %@", responseObject);
+            NSArray *respReplies = responseObject[@"replies"][@"reply"];
+            
+            // clean up existing self.groups
+            self.replies = [[NSMutableArray alloc] initWithCapacity:respReplies.count];
+            
+            for (id respReply in respReplies) {
+                Reply *reply = [[Reply alloc] init];
+                reply.id = respReply[@"id"];
+                reply.message = respReply[@"message"][@"_content"];
+                reply.authorId = respReply[@"author"];
+                reply.authorName = respReply[@"authorname"];
+                reply.buddyIconUrl = [self.client getBuddyIconUrlWithFarm:respReply[@"iconfarm"] server:respReply[@"iconserver"] id:reply.authorId];
+                reply.dateCreate = [respReply[@"datecreate"] intValue];
+                
+                NSLog(@"REPLY: %@", reply);
+                
+                // add to groups
+                [self.replies addObject:reply];
+            }
+            
+            NSLog(@"self.replies: %@", self.replies);
+            NSLog(@"self.replies count: %d", self.replies.count);
+            
+            // reload view
+            [self.tableView reloadData];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            // hide loading status
+            [hud hide:YES];
+            
+            NSLog(@"error getting replies");
+            NSLog(@"error details: %@", error);
+        }];
+        
+        if (self.refresh != nil && self.refresh.isRefreshing == YES) {
+            [self.refresh endRefreshing];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        });
+    });
+}
 
 @end

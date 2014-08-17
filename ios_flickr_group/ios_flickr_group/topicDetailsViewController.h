@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Topic.h"
 
 @interface topicDetailsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+
+-(id)initWithTopic:(Topic*)topic;
 
 @end
