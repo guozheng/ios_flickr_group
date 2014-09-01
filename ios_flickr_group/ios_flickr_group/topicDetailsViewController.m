@@ -17,6 +17,9 @@
 #import "FlickrGroupClient.h"
 #import "DateUtil.h"
 
+#import "MZFormSheetController.h"
+#import "addReplyViewController.h"
+
 @interface topicDetailsViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -82,6 +85,10 @@
     // register nib file for group details table view cell
     [self.tableView registerNib: [UINib nibWithNibName:@"topicTableViewCell" bundle:nil] forCellReuseIdentifier:@"topicTableViewCellID"];
     [self.tableView registerNib: [UINib nibWithNibName:@"replyTableViewCell" bundle:nil] forCellReuseIdentifier:@"replyTableViewCellID"];
+    
+    [[MZFormSheetController sharedBackgroundWindow] setBackgroundBlurEffect:YES];
+    [[MZFormSheetController sharedBackgroundWindow] setBlurRadius:5.0];
+    [[MZFormSheetController sharedBackgroundWindow] setBackgroundColor:[UIColor clearColor]];
     
     self.tableView.backgroundColor = [UIColor darkGrayColor];
     
@@ -181,6 +188,26 @@
 
 - (void) newReply {
     NSLog(@"newReply button clicked");
+    addReplyViewController *addReplyVc = [[addReplyViewController alloc] init];
+    addReplyVc = [addReplyVc initWithTopic:self.topic];
+    
+    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:addReplyVc];
+    
+    formSheet.presentedFormSheetSize = CGSizeMake(300, 300);
+    formSheet.transitionStyle = MZFormSheetTransitionStyleBounce;
+    formSheet.shadowOpacity = 0.3;
+    formSheet.shadowRadius = 2.0;
+    formSheet.shouldDismissOnBackgroundViewTap = YES;
+    formSheet.shouldCenterVertically = YES;
+    formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsCenterVertically;
+    
+//    [formSheet presentAnimated:YES completionHandler:^(UIViewController *presentedFSViewController) {
+//        NSLog(@"Hahahaha");
+//    }];
+    
+    [self mz_presentFormSheetController:formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
+        NSLog(@"hehehehe");
+    }];
 }
 
 // using 3rd party cocoacontrol MBProgressHUD: https://github.com/matej/MBProgressHUD

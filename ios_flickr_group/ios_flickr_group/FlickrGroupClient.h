@@ -77,5 +77,10 @@
                                                success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
                                                failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
 
+- (AFHTTPRequestOperation *)addTopicReplyWithTopicId:(NSString *)topicId
+                                             message:(NSString *)message
+                                             success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
+
 
 @end
