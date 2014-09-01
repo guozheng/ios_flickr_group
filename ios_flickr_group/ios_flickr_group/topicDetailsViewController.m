@@ -201,12 +201,13 @@
     formSheet.shouldCenterVertically = YES;
     formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsCenterVertically;
     
-//    [formSheet presentAnimated:YES completionHandler:^(UIViewController *presentedFSViewController) {
-//        NSLog(@"Hahahaha");
-//    }];
+    formSheet.didDismissCompletionHandler = ^(UIViewController *presentedFSViewController) {
+        NSLog(@"formsheet dismissed!");
+        [self reload];
+    };
     
     [self mz_presentFormSheetController:formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
-        NSLog(@"hehehehe");
+        NSLog(@"formsheet displayed!");
     }];
 }
 
