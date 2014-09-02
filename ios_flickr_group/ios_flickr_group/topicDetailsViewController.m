@@ -189,7 +189,7 @@
     [header.textLabel setTextColor:[UIColor colorWithRed:0.02f green:0.68f blue:0.85f alpha:1.0f]];
     
     // Background color
-//    header.backgroundView.backgroundColor = [UIColor whiteColor];
+//    header.contentView.backgroundColor = [UIColor whiteColor];
 }
 
 #pragma mark internal methods
