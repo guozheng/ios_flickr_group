@@ -47,7 +47,7 @@
     
     [self.replyInputTextField.layer setBackgroundColor: [[UIColor whiteColor] CGColor]];
     [self.replyInputTextField.layer setBorderColor: [[UIColor grayColor] CGColor]];
-    [self.replyInputTextField.layer setBorderWidth: 1.0];
+    [self.replyInputTextField.layer setBorderWidth: 1.0f];
     [self.replyInputTextField.layer setCornerRadius:8.0f];
     [self.replyInputTextField.layer setMasksToBounds:YES];
     

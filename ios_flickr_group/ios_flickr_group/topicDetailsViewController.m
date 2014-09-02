@@ -188,8 +188,7 @@
 
 - (void) newReply {
     NSLog(@"newReply button clicked");
-    addReplyViewController *addReplyVc = [[addReplyViewController alloc] init];
-    addReplyVc = [addReplyVc initWithTopic:self.topic];
+    addReplyViewController *addReplyVc = [[addReplyViewController alloc] initWithTopic:self.topic];
     
     MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:addReplyVc];
     

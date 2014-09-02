@@ -253,4 +253,17 @@ static NSString * const kCurrentUser = @"kCurrentUser";
     return [self POST:url parameters:params success:success failure:failure];
 }
 
+// add a new topic in a group
+- (AFHTTPRequestOperation *)addTopicWithGroupId:(NSString *)groupId
+                                        subject:(NSString *)subject
+                                        message:(NSString *)message
+                                        success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                        failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSString *url = @"rest";
+    NSDictionary *params = @{@"method":@"flickr.groups.discuss.topics.add", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"group_id":groupId, @"message":message, @"subject":subject};
+    NSLog(@"REST call for flickr.groups.discuss.topics.add");
+    
+    return [self POST:url parameters:params success:success failure:failure];
+}
+
 @end
