@@ -181,6 +181,17 @@
     }
 }
 
+// customize header view
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    
+    // Text Color
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    [header.textLabel setTextColor:[UIColor colorWithRed:0.02f green:0.68f blue:0.85f alpha:1.0f]];
+    
+    // Background color
+//    header.backgroundView.backgroundColor = [UIColor whiteColor];
+}
+
 #pragma mark internal methods
 - (void) popVc{
     [self.navigationController popViewControllerAnimated:YES];
