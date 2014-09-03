@@ -22,11 +22,11 @@
     NSString *age = nil;
 
     if (interval < SECONDS_IN_A_MINUTE) {
-        age = [NSString stringWithFormat:@"%.0fs", interval];
+        age = [NSString stringWithFormat:@"%.0fs ago", interval];
     } else if (interval < SECONDS_IN_AN_HOUR){
-        age = [NSString stringWithFormat:@"%.0fm", interval/SECONDS_IN_A_MINUTE];
+        age = [NSString stringWithFormat:@"%.0fm ago", interval/SECONDS_IN_A_MINUTE];
     } else if (interval < SECONDS_IN_A_DAY) {
-        age = [NSString stringWithFormat:@"%.0fh", interval/SECONDS_IN_AN_HOUR];
+        age = [NSString stringWithFormat:@"%.0fh ago", interval/SECONDS_IN_AN_HOUR];
     } else {
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         format.dateFormat = @"MM/dd/yy";

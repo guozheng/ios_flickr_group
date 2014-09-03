@@ -28,6 +28,8 @@
 		3F8E6D6419B1BA19008FDEC1 /* addReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F8E6D6219B1BA19008FDEC1 /* addReplyViewController.m */; };
 		3F8E6D6519B1BA19008FDEC1 /* addReplyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F8E6D6319B1BA19008FDEC1 /* addReplyViewController.xib */; };
 		3F90F2D91980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F90F2D81980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m */; };
+		3FCE1CB719B5905A0078ECFB /* addTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FCE1CB519B5905A0078ECFB /* addTopicViewController.m */; };
+		3FCE1CB819B5905A0078ECFB /* addTopicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FCE1CB619B5905A0078ECFB /* addTopicViewController.xib */; };
 		3FD763EC199F3EF600D00808 /* replyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD763EA199F3EF600D00808 /* replyTableViewCell.m */; };
 		3FD763ED199F3EF600D00808 /* replyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FD763EB199F3EF600D00808 /* replyTableViewCell.xib */; };
 		3FD763F019A01D9100D00808 /* Reply.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD763EF19A01D9100D00808 /* Reply.m */; };
@@ -94,6 +96,9 @@
 		3F8E6D6319B1BA19008FDEC1 /* addReplyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addReplyViewController.xib; sourceTree = "<group>"; };
 		3F90F2D71980EA5200DD48ED /* NSURL+dictionaryFromQueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+dictionaryFromQueryString.h"; sourceTree = "<group>"; };
 		3F90F2D81980EA5200DD48ED /* NSURL+dictionaryFromQueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+dictionaryFromQueryString.m"; sourceTree = "<group>"; };
+		3FCE1CB419B5905A0078ECFB /* addTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addTopicViewController.h; sourceTree = "<group>"; };
+		3FCE1CB519B5905A0078ECFB /* addTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addTopicViewController.m; sourceTree = "<group>"; };
+		3FCE1CB619B5905A0078ECFB /* addTopicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addTopicViewController.xib; sourceTree = "<group>"; };
 		3FD763E9199F3EF600D00808 /* replyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = replyTableViewCell.h; sourceTree = "<group>"; };
 		3FD763EA199F3EF600D00808 /* replyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = replyTableViewCell.m; sourceTree = "<group>"; };
 		3FD763EB199F3EF600D00808 /* replyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = replyTableViewCell.xib; sourceTree = "<group>"; };
@@ -232,6 +237,9 @@
 				159F0D391979EC3B007930AF /* addGroupsViewController.xib */,
 				159F0D3C1979EC56007930AF /* groupDetalisViewController.h */,
 				159F0D3D1979EC56007930AF /* groupDetalisViewController.m */,
+				3FCE1CB419B5905A0078ECFB /* addTopicViewController.h */,
+				3FCE1CB519B5905A0078ECFB /* addTopicViewController.m */,
+				3FCE1CB619B5905A0078ECFB /* addTopicViewController.xib */,
 				159F0D3E1979EC56007930AF /* groupDetalisViewController.xib */,
 				159F0D411979EC6C007930AF /* topicDetailsViewController.h */,
 				159F0D421979EC6C007930AF /* topicDetailsViewController.m */,
@@ -359,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				159F0D361979EC28007930AF /* myGroupsViewController.xib in Resources */,
+				3FCE1CB819B5905A0078ECFB /* addTopicViewController.xib in Resources */,
 				6FE80DE919787C5900CAB00E /* InfoPlist.strings in Resources */,
 				159F0D451979EC6C007930AF /* topicDetailsViewController.xib in Resources */,
 				159F0D311979EC05007930AF /* logInViewController.xib in Resources */,
@@ -431,6 +440,7 @@
 				159F0D4E1979F433007930AF /* addGroupTableViewCell.m in Sources */,
 				6F648BBC197C863A0005C27C /* topicTableViewCell.m in Sources */,
 				159F0D301979EC05007930AF /* logInViewController.m in Sources */,
+				3FCE1CB719B5905A0078ECFB /* addTopicViewController.m in Sources */,
 				6FE80DEB19787C5900CAB00E /* main.m in Sources */,
 				3FD763F019A01D9100D00808 /* Reply.m in Sources */,
 				3F8E6D6419B1BA19008FDEC1 /* addReplyViewController.m in Sources */,

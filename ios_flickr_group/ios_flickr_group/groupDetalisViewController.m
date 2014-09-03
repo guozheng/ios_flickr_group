@@ -15,6 +15,9 @@
 #import "FlickrGroupClient.h"
 #import "Topic.h"
 
+#import "addTopicViewController.h"
+#import "MZFormSheetController.h"
+
 @interface groupDetalisViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -88,6 +91,10 @@
     
     self.swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight | UISwipeGestureRecognizerDirectionLeft;
     
+    [[MZFormSheetController sharedBackgroundWindow] setBackgroundBlurEffect:YES];
+    [[MZFormSheetController sharedBackgroundWindow] setBlurRadius:5.0];
+    [[MZFormSheetController sharedBackgroundWindow] setBackgroundColor:[UIColor clearColor]];
+    
     [self reload];
 }
 
@@ -100,6 +107,28 @@
 - (void) newDiscussion
 {
     NSLog(@"newDiscussion button clicked!");
+    
+    addTopicViewController *addTopicVc = [[addTopicViewController alloc] init];
+    addTopicVc.groupId = self.groupId;
+    
+    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:addTopicVc];
+    
+    formSheet.presentedFormSheetSize = CGSizeMake(300, 300);
+    formSheet.transitionStyle = MZFormSheetTransitionStyleBounce;
+    formSheet.shadowOpacity = 0.3;
+    formSheet.shadowRadius = 2.0;
+    formSheet.shouldDismissOnBackgroundViewTap = YES;
+    formSheet.shouldCenterVertically = YES;
+    formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsCenterVertically;
+    
+    formSheet.didDismissCompletionHandler = ^(UIViewController *presentedFSViewController) {
+        NSLog(@"add topic formsheet dismissed!");
+        [self reload];
+    };
+    
+    [self mz_presentFormSheetController:formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
+        NSLog(@"add topic formsheet displayed!");
+    }];
 }
 
 - (void) popVc{
@@ -136,7 +165,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 110.0f;
+    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

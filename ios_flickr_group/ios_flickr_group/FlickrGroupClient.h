@@ -82,5 +82,11 @@
                                              success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
                                              failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
 
+- (AFHTTPRequestOperation *)addTopicWithGroupId:(NSString *)groupId
+                                        subject:(NSString *)subject
+                                        message:(NSString *)message
+                                        success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
+                                        failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
+
 
 @end

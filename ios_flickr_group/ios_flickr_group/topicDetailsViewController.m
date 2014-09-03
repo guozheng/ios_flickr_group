@@ -133,11 +133,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        return 110.0f;
-    } else {
-        return 200.0f;
-    }
+    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -181,6 +178,17 @@
     }
 }
 
+// customize header view
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    
+    // Text Color
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    [header.textLabel setTextColor:[UIColor colorWithRed:0.02f green:0.68f blue:0.85f alpha:1.0f]];
+    
+    // Background color
+//    header.contentView.backgroundColor = [UIColor whiteColor];
+}
+
 #pragma mark internal methods
 - (void) popVc{
     [self.navigationController popViewControllerAnimated:YES];
@@ -188,8 +196,7 @@
 
 - (void) newReply {
     NSLog(@"newReply button clicked");
-    addReplyViewController *addReplyVc = [[addReplyViewController alloc] init];
-    addReplyVc = [addReplyVc initWithTopic:self.topic];
+    addReplyViewController *addReplyVc = [[addReplyViewController alloc] initWithTopic:self.topic];
     
     MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:addReplyVc];
     
