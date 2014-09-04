@@ -166,6 +166,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    [cell setNeedsLayout];
+    [cell layoutIfNeeded];
     return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
 }
 
@@ -177,6 +179,10 @@
     
     topicDetailsViewController* gdvc = [[topicDetailsViewController alloc] initWithTopic:topic];
     [self.navigationController pushViewController:gdvc animated:YES];
+}
+
+- (BOOL)isLandscapeOrientation {
+    return UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation);
 }
 
 

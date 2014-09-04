@@ -72,7 +72,11 @@
     self.navigationItem.titleView = self.searchBar;
     
     // sign out button
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStyleBordered target:self action:@selector(userSignOut)];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStyleBordered target:self action:@selector(userSignOut)];
+    UIButton *logoutButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30.0f, 30.0f)];
+    [logoutButton setImage:[UIImage imageNamed:@"Bye"] forState:UIControlStateNormal];
+    [logoutButton addTarget:self action:@selector(userSignOut) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:logoutButton];
     
     // join group button
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Join" style:UIBarButtonItemStyleBordered target:self action:@selector(joinGroup)];
@@ -87,7 +91,7 @@
     // register group table cell
     [self.tableView registerNib:[UINib nibWithNibName:@"myGroupTableViewCell" bundle:nil] forCellReuseIdentifier:@"myGroupTableViewCell"];
     
-    self.tableView.backgroundColor = [UIColor blackColor];
+    self.tableView.backgroundColor = [UIColor darkGrayColor];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -202,7 +206,6 @@
     return self.groups.count;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     myGroupTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"myGroupTableViewCell"];
@@ -213,7 +216,7 @@
     
     // For SWTableViewCell
     NSMutableArray *rightUtilityButtons = [[NSMutableArray alloc] init];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:1.0f green:0.23f blue:0.19 alpha:1.0f] title:@"Delete"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:1.0f green:0.23f blue:0.19f alpha:1.0f] title:@"Delete"];
     cell.rightUtilityButtons = rightUtilityButtons;
     cell.delegate = self;
     cell.indexPath = indexPath;
@@ -226,10 +229,9 @@
     //group buddy icon
     NSURL *imageURL = [NSURL URLWithString:group.buddyIconUrl];
     UIImage *defaultImage = [UIImage imageNamed:@"GroupDefault"];
-    cell.groupBuddyIcon.layer.cornerRadius = 15.0;
-    cell.groupBuddyIcon.layer.borderColor = [[UIColor colorWithRed:0.02f green:0.68f blue:0.85f alpha:1.0] CGColor];
-//    cell.groupBuddyIcon.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-    cell.groupBuddyIcon.layer.borderWidth = 2.0;
+    cell.groupBuddyIcon.layer.cornerRadius = 10.0f;
+    cell.groupBuddyIcon.layer.borderColor = [[UIColor grayColor] CGColor];
+    cell.groupBuddyIcon.layer.borderWidth = 1.0f;
     cell.groupBuddyIcon.layer.masksToBounds = YES;
     [cell.groupBuddyIcon setImageWithURL:imageURL placeholderImage:defaultImage];
     
@@ -244,7 +246,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 85.0f;
+    return 80.0f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

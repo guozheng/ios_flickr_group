@@ -107,9 +107,9 @@
     //group buddy icon
     NSURL *imageURL = [NSURL URLWithString:group.buddyIconUrl];
     UIImage *defaultImage = [UIImage imageNamed:@"GroupDefault"];
-    cell.groupBuddyIcon.layer.cornerRadius = 10.0;
+    cell.groupBuddyIcon.layer.cornerRadius = 10.0f;
     cell.groupBuddyIcon.layer.borderColor = [[UIColor grayColor] CGColor];
-    cell.groupBuddyIcon.layer.borderWidth = 1.0;
+    cell.groupBuddyIcon.layer.borderWidth = 1.0f;
     cell.groupBuddyIcon.layer.masksToBounds = YES;
     [cell.groupBuddyIcon setImageWithURL:imageURL placeholderImage:defaultImage];
     
@@ -124,7 +124,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100.0f;
+    return 80.0f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
