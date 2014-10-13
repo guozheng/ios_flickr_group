@@ -116,9 +116,9 @@ static NSString * const kCurrentUser = @"kCurrentUser";
         // use a default buddy icon
         NSUInteger r = arc4random_uniform(11) + 1; // random int between 1 to 11
         if (r < 10) {
-            url = [NSString stringWithFormat:@"https://s.yimg.com/pw/images/buddyicon0%d.png", r];
+            url = [NSString stringWithFormat:@"https://s.yimg.com/pw/images/buddyicon0%lu.png", (unsigned long)r];
         } else {
-            url = [NSString stringWithFormat:@"https://s.yimg.com/pw/images/buddyicon%d.png", r];
+            url = [NSString stringWithFormat:@"https://s.yimg.com/pw/images/buddyicon%lu.png", (unsigned long)r];
         }
     } else {
         // construct a buddy icon
@@ -213,7 +213,7 @@ static NSString * const kCurrentUser = @"kCurrentUser";
                                               success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
                                               failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure{
     NSString *url = @"rest";
-    NSDictionary *params = @{@"method":@"flickr.groups.discuss.topics.getList", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"group_id":groupId, @"per_page":[NSNumber numberWithInt:countPerPage], @"page":[NSNumber numberWithInt:pageNum]};
+    NSDictionary *params = @{@"method":@"flickr.groups.discuss.topics.getList", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"group_id":groupId, @"per_page":[NSNumber numberWithInt:(int)countPerPage], @"page":[NSNumber numberWithInt:(int)pageNum]};
     NSLog(@"REST call for flickr.groups.discuss.topics.getList");
     
     return [self GET:url parameters:params success:success failure:failure];
@@ -235,7 +235,7 @@ static NSString * const kCurrentUser = @"kCurrentUser";
                                                success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success
                                                failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
     NSString *url = @"rest";
-    NSDictionary *params = @{@"method":@"flickr.groups.discuss.replies.getList", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"topic_id":topicId, @"per_page":[NSNumber numberWithInt:countPerPage], @"page":[NSNumber numberWithInt:pageNum]};
+    NSDictionary *params = @{@"method":@"flickr.groups.discuss.replies.getList", @"format":@"json", @"nojsoncallback":@"1", @"api_key":KEY, @"topic_id":topicId, @"per_page":[NSNumber numberWithInt:(int)countPerPage], @"page":[NSNumber numberWithInt:(int)pageNum]};
     NSLog(@"REST call for flickr.groups.discuss.replies.getList");
     
     return [self GET:url parameters:params success:success failure:failure];

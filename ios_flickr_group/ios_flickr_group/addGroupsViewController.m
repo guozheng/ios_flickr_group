@@ -117,7 +117,7 @@
     cell.is18plus.hidden = !group.is18plus;
     cell.isInvitationOnly.hidden = !group.isInvitationOnly;
     
-    NSLog(@"returning cell #%d", indexPath.row);
+    NSLog(@"returning cell #%ld", (long)indexPath.row);
     
     return cell;
 }
@@ -201,7 +201,7 @@
 }
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state{
-    NSLog(@"did scroll... state %d", state);
+    NSLog(@"did scroll... state %ld", state);
     
     [self.searchBar resignFirstResponder];
 }

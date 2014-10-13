@@ -137,12 +137,27 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.topics.count;
+    return self.topics.count + 1;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"============ groupDetailsViewController, indexPath: row=%ld", (long)indexPath.row);
+    NSLog(@"============ topics.count: %lu", (unsigned long)self.topics.count);
+    
+    if (indexPath.row == self.topics.count) {
+        NSLog(@"============= showing the last cell");
+        UITableViewCell *lastCell = [tableView dequeueReusableCellWithIdentifier:@"lastCell"];
+        if (lastCell == nil) {
+             lastCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"lastCell"];
+        }
+        
+        lastCell.textLabel.text = @"Pull to load next 10 items...";
+        return lastCell;
+    }
+    
+    NSLog(@"================ showig the normal cell");
     topicTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"topicTableViewCellID"];
     
     if (cell == nil)
@@ -223,7 +238,7 @@
             }
             
             NSLog(@"self.topics: %@", self.topics);
-            NSLog(@"self.topic count: %d", self.topics.count);
+            NSLog(@"self.topic count: %lu", (unsigned long)self.topics.count);
             
             // reload view
             [self.tableView reloadData];

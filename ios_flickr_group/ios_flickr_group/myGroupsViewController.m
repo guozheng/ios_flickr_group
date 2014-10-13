@@ -239,7 +239,7 @@
     cell.is18plus.hidden = !group.is18plus;
     cell.isInvitationOnly.hidden = !group.isInvitationOnly;
     
-    NSLog(@"returning cell #%d", indexPath.row);
+    NSLog(@"returning cell #%ld", (long)indexPath.row);
     
     return cell;
 }
@@ -266,7 +266,7 @@
         case 0:
         {
             NSLog(@"Delete button was pressed");
-            int rowIndex = ((myGroupTableViewCell*)cell).indexPath.row;
+            int rowIndex = (int)((myGroupTableViewCell*)cell).indexPath.row;
             Group* group = self.groups[rowIndex];
             NSLog(@"%@", group);
             [self.client leaveGroupWithGroupId:group.groupId success:^(AFHTTPRequestOperation *operation, id responseObject) {
