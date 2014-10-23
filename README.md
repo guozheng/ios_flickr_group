@@ -12,6 +12,7 @@ topic, etc.)
 
 #Workflow
 
+![GitHub Logo](/screencast/screencast.gif)
 
 #Design
 
