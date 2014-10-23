@@ -139,7 +139,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"selected section=%d, row=%d", indexPath.section, indexPath.row);
+    NSLog(@"selected section=%ld, row=%ld", (long)indexPath.section, (long)indexPath.row);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -254,7 +254,7 @@
             }
             
             NSLog(@"self.replies: %@", self.replies);
-            NSLog(@"self.replies count: %d", self.replies.count);
+            NSLog(@"self.replies count: %lu", (unsigned long)self.replies.count);
             
             // reload view
             [self.tableView reloadData];
