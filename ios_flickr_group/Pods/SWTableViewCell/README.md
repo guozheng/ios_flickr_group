@@ -5,6 +5,12 @@ SWTableViewCell
 
 An easy-to-use UITableViewCell subclass that implements a swipeable content view which exposes utility buttons (similar to iOS 7 Mail Application)
 
+##Usage
+In your Podfile:
+<pre>pod 'SWTableViewCell', '~> 0.3.5'</pre>
+
+Or just clone this repo and manually add source to project
+
 ##Functionality
 ###Right Utility Buttons
 Utility buttons that become visible on the right side of the Table View Cell when the user swipes left. This behavior is similar to that seen in the iOS apps Mail and Reminders.
@@ -37,42 +43,50 @@ In your `tableView:cellForRowAtIndexPath:` method you set up the SWTableView cel
     SWTableViewCell *cell = (SWTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil) {
-        NSMutableArray *leftUtilityButtons = [NSMutableArray new];
-        NSMutableArray *rightUtilityButtons = [NSMutableArray new];
-        
-        [leftUtilityButtons sw_addUtilityButtonWithColor:
-                        [UIColor colorWithRed:0.07 green:0.75f blue:0.16f alpha:1.0] 
-                        icon:[UIImage imageNamed:@"check.png"]];
-        [leftUtilityButtons sw_addUtilityButtonWithColor:
-                        [UIColor colorWithRed:1.0f green:1.0f blue:0.35f alpha:1.0] 
-                        icon:[UIImage imageNamed:@"clock.png"]];
-        [leftUtilityButtons sw_addUtilityButtonWithColor:
-                        [UIColor colorWithRed:1.0f green:0.231f blue:0.188f alpha:1.0] 
-                        icon:[UIImage imageNamed:@"cross.png"]];
-        [leftUtilityButtons sw_addUtilityButtonWithColor:
-                        [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0] 
-                        icon:[UIImage imageNamed:@"list.png"]];
-        
-        [rightUtilityButtons sw_addUtilityButtonWithColor:
-                        [UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0]
-                        title:@"More"];
-        [rightUtilityButtons sw_addUtilityButtonWithColor:
-                        [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f] 
-                            title:@"Delete"];
-        
-        cell = [[SWTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle 
-                        reuseIdentifier:cellIdentifier 
-                        containingTableView:_tableView // For row height and selection
-                        leftUtilityButtons:leftUtilityButtons 
-                        rightUtilityButtons:rightUtilityButtons];
+        cell = [[SWTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        cell.leftUtilityButtons = [self leftButtons];
+        cell.rightUtilityButtons = [self rightButtons];
         cell.delegate = self;
     }
     
     NSDate *dateObject = _testArray[indexPath.row];
     cell.textLabel.text = [dateObject description];
     cell.detailTextLabel.text = @"Some detail text";
+    
+    return cell;
+}
 
-return cell;
+- (NSArray *)rightButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0]
+                                                title:@"More"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f]
+                                                title:@"Delete"];
+
+    return rightUtilityButtons;
+}
+
+- (NSArray *)leftButtons
+{
+    NSMutableArray *leftUtilityButtons = [NSMutableArray new];
+    
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.07 green:0.75f blue:0.16f alpha:1.0]
+                                                icon:[UIImage imageNamed:@"check.png"]];
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:1.0f green:1.0f blue:0.35f alpha:1.0]
+                                                icon:[UIImage imageNamed:@"clock.png"]];
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:1.0f green:0.231f blue:0.188f alpha:1.0]
+                                                icon:[UIImage imageNamed:@"cross.png"]];
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0]
+                                                icon:[UIImage imageNamed:@"list.png"]];
+    
+    return leftUtilityButtons;
 }
 ```
 
@@ -128,40 +142,11 @@ Then, in the `tableView:cellForRowAtIndexPath:` method of your `UITableViewDeleg
     
     MyCustomTableViewCell *cell = (MyCustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier 
                                                                                            forIndexPath:indexPath];
-	__weak MyCustomTableViewCell *weakCell = cell;																					   
-	//Do any fixed setup here (will be executed once unless force is set to YES)
-	[cell setAppearanceWithBlock:^{
-		weakCell.containingTableView = tableView;
-		
-	    NSMutableArray *leftUtilityButtons = [NSMutableArray new];
-	    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
-    
-	    [leftUtilityButtons sw_addUtilityButtonWithColor:
-	                    [UIColor colorWithRed:0.07 green:0.75f blue:0.16f alpha:1.0] 
-	                    icon:[UIImage imageNamed:@"check.png"]];
-	    [leftUtilityButtons sw_addUtilityButtonWithColor:
-	                    [UIColor colorWithRed:1.0f green:1.0f blue:0.35f alpha:1.0] 
-	                    icon:[UIImage imageNamed:@"clock.png"]];
-	    [leftUtilityButtons sw_addUtilityButtonWithColor:
-	                    [UIColor colorWithRed:1.0f green:0.231f blue:0.188f alpha:1.0] 
-	                    icon:[UIImage imageNamed:@"cross.png"]];
-	    [leftUtilityButtons sw_addUtilityButtonWithColor:
-	                    [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0] 
-	                    icon:[UIImage imageNamed:@"list.png"]];
-    
-	    [rightUtilityButtons sw_addUtilityButtonWithColor:
-	                    [UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0]
-	                    title:@"More"];
-	    [rightUtilityButtons sw_addUtilityButtonWithColor:
-	                    [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f] 
-	                        title:@"Delete"];
 
-	    weakCell.leftUtilityButtons = leftUtilityButtons;
-	    weakCell.rightUtilityButtons = rightUtilityButtons;
+    cell.leftUtilityButtons = [self leftButtons];
+    cell.rightUtilityButtons = [self rightButtons];
+    cell.delegate = self;
     
-	    weakCell.delegate = self;
-	} force:NO];
-	
     cell.customLabel.text = @"Some Text";
     cell.customImageView.image = [UIImage imageNamed:@"MyAwesomeTableCellImage"];
     [cell setCellHeight:cell.frame.size.height];
@@ -171,11 +156,23 @@ Then, in the `tableView:cellForRowAtIndexPath:` method of your `UITableViewDeleg
 
 ###Delegate
 
-The delegate `SWTableViewCellDelegate` is used by the developer to find out which button was pressed. There are two methods:
+The delegate `SWTableViewCellDelegate` is used by the developer to find out which button was pressed. There are five methods:
 
 ```objc
+// click event on left utility button
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index;
+
+// click event on right utility button
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index;
+
+// utility button open/close event
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state;
+
+// prevent multiple cells from showing utilty buttons simultaneously
+- (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell;
+
+// prevent cell(s) from displaying left/right utility buttons
+- (BOOL)swipeableTableViewCell:(SWTableViewCell *)cell canSwipeToState:(SWCellState)state;
 ```
 
 The index signifies which utility button the user pressed, for each side the button indices are ordered from right to left 0...n
@@ -228,10 +225,6 @@ The index signifies which utility button the user pressed, for each side the but
 
 ###Gotchas
 
-#### Custom `UITableViewCell` content
-* Accessing view of the cell object or managing the predefined content still works fine. So for example if you change the cell's `imageView` or `backgroundView`, `SWTableViewCell` will still work as expected
-* Don't use accessory views in your cell, because they live above the `contentView` and will stay in place when the cell scrolls.
-
 #### Seperator Insets
 * If you have left utility button on iOS 7, I recommend changing your Table View's seperatorInset so the seperator stretches the length of the screen
 <pre> tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0); </pre>
@@ -239,8 +232,6 @@ The index signifies which utility button the user pressed, for each side the but
 
 ##Contributing
 Use [Github issues](https://github.com/cewendel/SWTableViewCell/issues) to track bugs and feature requests.
-
-I'm really busy in college and not actively working on this, so pull requests would be greatly appreciated.
 
 ##Contact
 

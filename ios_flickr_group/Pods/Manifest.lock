@@ -30,14 +30,14 @@ PODS:
     - MZFormSheetController/Core
   - MZFormSheetController/Core (2.3.5):
     - MZAppearance (~> 1.1.2)
-  - SWTableViewCell (0.3.0)
+  - SWTableViewCell (0.3.5)
 
 DEPENDENCIES:
   - AFNetworking
   - BDBOAuth1Manager
   - MBProgressHUD (~> 0.8)
   - MZFormSheetController
-  - SWTableViewCell (~> 0.3.0)
+  - SWTableViewCell (~> 0.3.5)
 
 SPEC CHECKSUMS:
   AFNetworking: 6d7b76aa5d04c8c37daad3eef4b7e3f2a7620da3
@@ -45,6 +45,6 @@ SPEC CHECKSUMS:
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
   MZAppearance: c88502c0c2345120630c34e09d5ff09e2969ba30
   MZFormSheetController: bf3480f952a0e04e6ebc5a6ad55bd672c11fc162
-  SWTableViewCell: 1725f7607ce4c154264c18aeb78e4636b11b0b29
+  SWTableViewCell: da159b491b1253446ffbcabcfa94e6a4c94bf04b
 
-COCOAPODS: 0.33.1
+COCOAPODS: 0.34.4
