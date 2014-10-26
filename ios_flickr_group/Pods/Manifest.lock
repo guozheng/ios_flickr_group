@@ -30,6 +30,7 @@ PODS:
     - MZFormSheetController/Core
   - MZFormSheetController/Core (2.3.5):
     - MZAppearance (~> 1.1.2)
+  - SVPullToRefresh (0.4.1)
   - SWTableViewCell (0.3.5)
 
 DEPENDENCIES:
@@ -37,6 +38,7 @@ DEPENDENCIES:
   - BDBOAuth1Manager
   - MBProgressHUD (~> 0.8)
   - MZFormSheetController
+  - SVPullToRefresh
   - SWTableViewCell (~> 0.3.5)
 
 SPEC CHECKSUMS:
@@ -45,6 +47,7 @@ SPEC CHECKSUMS:
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
   MZAppearance: c88502c0c2345120630c34e09d5ff09e2969ba30
   MZFormSheetController: bf3480f952a0e04e6ebc5a6ad55bd672c11fc162
+  SVPullToRefresh: d5161ebc833a38b465364412e5e307ca80bbb190
   SWTableViewCell: da159b491b1253446ffbcabcfa94e6a4c94bf04b
 
 COCOAPODS: 0.34.4

@@ -78,6 +78,12 @@
 #define COCOAPODS_VERSION_MINOR_MZFormSheetController_Core 3
 #define COCOAPODS_VERSION_PATCH_MZFormSheetController_Core 5
 
+// SVPullToRefresh
+#define COCOAPODS_POD_AVAILABLE_SVPullToRefresh
+#define COCOAPODS_VERSION_MAJOR_SVPullToRefresh 0
+#define COCOAPODS_VERSION_MINOR_SVPullToRefresh 4
+#define COCOAPODS_VERSION_PATCH_SVPullToRefresh 1
+
 // SWTableViewCell
 #define COCOAPODS_POD_AVAILABLE_SWTableViewCell
 #define COCOAPODS_VERSION_MAJOR_SWTableViewCell 0

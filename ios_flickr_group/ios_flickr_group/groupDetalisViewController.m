@@ -18,14 +18,19 @@
 #import "addTopicViewController.h"
 #import "MZFormSheetController.h"
 
+#import "UIScrollView+SVPullToRefresh.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
+
+static int initialPage = 1;
+
 @interface groupDetalisViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @property (strong, nonatomic) NSString* groupId;
 @property (strong, nonatomic) NSMutableArray* topics;
 @property (strong, nonatomic) FlickrGroupClient* client;
 @property (strong, nonatomic) UIRefreshControl* refresh;
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeGestureRecognizer;
+@property (assign, nonatomic) int pageCount;
 - (IBAction)onSwipe:(id)sender;
 
 @end
@@ -46,6 +51,8 @@
     self = [super init];
     if (self){
         self.groupId = groupId;
+        self.topics = [NSMutableArray array];
+        self.pageCount = initialPage;
     }
     return self;
 }
@@ -95,6 +102,21 @@
     [[MZFormSheetController sharedBackgroundWindow] setBlurRadius:5.0];
     [[MZFormSheetController sharedBackgroundWindow] setBackgroundColor:[UIColor clearColor]];
     
+    __weak typeof(self) weakSelf = self;
+    // pull to refresh
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        weakSelf.pageCount = initialPage;
+        [weakSelf.topics removeAllObjects];
+        [weakSelf.tableView reloadData];
+        [weakSelf reload];
+        [weakSelf.tableView.pullToRefreshView stopAnimating];
+    }];
+    
+    // infinitive scrolling
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        [weakSelf reload];
+    }];
+    
     [self reload];
 }
 
@@ -137,7 +159,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.topics.count + 1;
+    return self.topics.count;
 }
 
 
@@ -146,18 +168,6 @@
     NSLog(@"============ groupDetailsViewController, indexPath: row=%ld", (long)indexPath.row);
     NSLog(@"============ topics.count: %lu", (unsigned long)self.topics.count);
     
-    if (indexPath.row == self.topics.count) {
-        NSLog(@"============= showing the last cell");
-        UITableViewCell *lastCell = [tableView dequeueReusableCellWithIdentifier:@"lastCell"];
-        if (lastCell == nil) {
-             lastCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"lastCell"];
-        }
-        
-        lastCell.textLabel.text = @"Pull to load next 10 items...";
-        return lastCell;
-    }
-    
-    NSLog(@"================ showig the normal cell");
     topicTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"topicTableViewCellID"];
     
     if (cell == nil)
@@ -211,7 +221,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         
         NSLog(@"reloading groups");
-        [self.client getGroupTopicsWithGroupId:self.groupId countPerPage:10 pageNum:1 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.client getGroupTopicsWithGroupId:self.groupId countPerPage:10 pageNum:self.pageCount success:^(AFHTTPRequestOperation *operation, id responseObject) {
             // hide loading status
             [hud hide:YES];
             
@@ -219,8 +229,15 @@
             NSLog(@"responseObject: %@", responseObject);
             NSArray *respTopics = responseObject[@"topics"][@"topic"];
             
-            // clean up existing self.groups
-            self.topics = [[NSMutableArray alloc] initWithCapacity:respTopics.count];
+            // no more result
+            if (respTopics.count == 0) {
+                NSLog(@"no results found");
+                self.tableView.showsInfiniteScrolling = NO;
+                return;
+            }
+            
+            self.pageCount++;
+            int currentRow = self.topics.count;
             
             for (id respTopic in respTopics) {
                 Topic *topic = [[Topic alloc] init];
@@ -240,12 +257,16 @@
             NSLog(@"self.topics: %@", self.topics);
             NSLog(@"self.topic count: %lu", (unsigned long)self.topics.count);
             
-            // reload view
-            [self.tableView reloadData];
+            [self reloadTableView:currentRow];
+            
+            [self.tableView.pullToRefreshView stopAnimating];
+            [self.tableView.infiniteScrollingView stopAnimating];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             // hide loading status
             [hud hide:YES];
+            
+            self.tableView.showsInfiniteScrolling = NO;
             
             NSLog(@"error searching groups");
             NSLog(@"error details: %@", error);
@@ -264,4 +285,16 @@
 - (IBAction)onSwipe:(id)sender {
     NSLog(@"swipe!");
 }
+
+- (void)reloadTableView:(int)startingRow {
+    int endingRow = self.topics.count;
+    
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    for (; startingRow < endingRow; startingRow++) {
+        [indexPaths addObject:[NSIndexPath indexPathForRow:startingRow inSection:0]];
+    }
+    
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+}
+
 @end
