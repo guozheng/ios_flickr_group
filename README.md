@@ -10,6 +10,13 @@ features such as group management (search for groups, join and leave a
 group) and group discussion (create new topic, comment on existing
 topic, etc.)
 
+Main features:
+  * Search for groups
+  * Join and Leave groups
+  * View discussions in a group
+  * Add new discussion topics
+  * Reply to a discussion topic
+
 #Workflow
 
 ![GitHub Logo](/screencast/screencast.gif)
@@ -43,4 +50,13 @@ Topic Detail Screen.
 ##Topic Detail Screen:
 shows the topic discussion thread history. If the
 user is a member, it also allows user to make comments and reply to
-existing comments.  
+existing comments.
+
+#Special Thanks
+
+  * [AFNetworking, one of the best networking library](https://github.com/AFNetworking/AFNetworking)
+  * [BDBOAuth1Manager, making Oauth like a breeze](https://github.com/bdbergeron/BDBOAuth1Manager)
+  * [MBProgressHUD, progress indicator](https://github.com/jdg/MBProgressHUD)
+  * [SWTableViewCell, a swippable UITableViewCell subclass with buttons](https://github.com/CEWendel/SWTableViewCell)
+  * [MZFormSheetController, a customized modal form sheet](https://github.com/m1entus/MZFormSheetController)
+  * [SVPullToRefresh, pull to refresh, endless scrolling](https://github.com/samvermette/SVPullToRefresh)
